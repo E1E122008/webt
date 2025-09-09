@@ -7,8 +7,8 @@ use App\Models\Population;
 use Illuminate\Http\Request;
 use App\Imports\PopulationImport;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Carbon\Carbon;
-use App\Services\ExcelNormalizationService;
 use Illuminate\Support\Facades\Storage;
 
 class PopulationController extends Controller
@@ -64,10 +64,7 @@ class PopulationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -109,90 +106,64 @@ class PopulationController extends Controller
         //
     }
 
-    public function importExcel(Request $request, ExcelNormalizationService $normalizer)
+    public function importExcel(Request $request)
     {
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv'
         ]);
-        
         try {
-            // Log import start
-            \Log::info('Starting population import', [
-                'file_name' => $request->file('file')->getClientOriginalName(),
-                'file_size' => $request->file('file')->getSize(),
-                'user_id' => auth()->id()
-            ]);
-            
-            // Count data before import
-            $beforeCount = Population::count();
-            
-            // Simpan file sementara dan normalisasi header dua baris (seperti contoh CSV)
-            // Pastikan folder storage/app/imports ada
-            Storage::disk('local')->makeDirectory('imports');
-            $tmpPath = $request->file('file')->storeAs(
-                'imports',
-                uniqid('population_') . '.' . $request->file('file')->getClientOriginalExtension(),
-                'local'
-            );
-            $absPath = Storage::disk('local')->path($tmpPath);
-
-            if (!is_file($absPath)) {
-                throw new \RuntimeException("File not found after upload: {$absPath}");
+            $file = $request->file('file');
+            $spreadsheet = IOFactory::load($file->getRealPath());
+            $allRows = [];
+            $dusunNames = ['Dusun 1', 'Dusun 2', 'Dusun 3'];
+            foreach ($spreadsheet->getAllSheets() as $idx => $sheet) {
+                $sheetData = $sheet->toArray(null, true, true, true);
+                if (count($sheetData) < 2) continue;
+                $headers = array_map('trim', $sheetData[1]);
+                for ($i = 2; $i <= count($sheetData); $i++) {
+                    $row = $sheetData[$i];
+                    $assoc = [];
+                    $colIdx = 0;
+                    foreach ($headers as $key) {
+                        $col = chr(65 + $colIdx); // A, B, C, ...
+                        $assoc[$key] = $row[$col] ?? null;
+                        $colIdx++;
+                    }
+                    $assoc['dusun'] = $dusunNames[$idx] ?? 'Dusun ' . ($idx + 1);
+                    $allRows[] = $assoc;
+                }
             }
-
-            $normalized = $normalizer->normalize($absPath);
-
-            $importer = new PopulationImport();
+            // Normalisasi dan simpan
             $imported = 0;
-            foreach ($normalized['rows'] as $row) {
-                // Penyesuaian agar cocok dengan mapping importer
-                if (!isset($row['alamat_kk']) && isset($row['alamat'])) {
-                    $row['alamat_kk'] = $row['alamat'];
-                }
-
-                // Jalankan mapping model per baris
-                $model = $importer->model($row);
-                if ($model !== null) {
-                    $imported++;
-                }
+            foreach ($allRows as $row) {
+                $data = [
+                    'no_kk' => $row['No. KK'] ?? null,
+                    'nik' => $row['NIK'] ?? null,
+                    'nama' => $row['Nama'] ?? null,
+                    'alamat_kk' => $row['Alamat KK'] ?? null,
+                    'kk_dikeluarkan' => $row['KK di keluarkan pada tanggal'] ?? null,
+                    'jenis_kelamin' => $row['L'] ? 'L' : ($row['P'] ? 'P' : null),
+                    'hubungan_kepala_keluarga' => $row['Hubungan Kepala Keluarga'] ?? null,
+                    'tempat_lahir' => $row['Tempat'] ?? null,
+                    'tanggal_lahir' => $row['Tggl'] ?? null,
+                    'bulan_lahir' => $row['Bulan'] ?? null,
+                    'tahun_lahir' => $row['Tahun'] ?? null,
+                    'status_perkawinan' => $row['Status'] ?? null,
+                    'suku' => $row['Suku'] ?? null,
+                    'pendidikan_terakhir' => $row['Pendidikan Terlahir'] ?? null,
+                    'mata_pencaharian' => $row['Mata Pencaharian'] ?? null,
+                    'pekerjaan_tambahan' => $row['Pekerjaan Tambahan'] ?? null,
+                    'luas_lahan_pertanian' => $row['Luas Lahan M'] ?? null,
+                    'komoditas_utama' => $row['Komoditas Utama'] ?? null,
+                    'komoditas_buah_sayur' => $row['Komoditas Buah & sayur'] ?? null,
+                    'bantuan' => $row['Bantuan'] ?? null,
+                    'dusun' => $row['dusun'] ?? null,
+                ];
+                \App\Models\Population::create($data);
+                $imported++;
             }
-            
-            // Count data after import
-            $afterCount = Population::count();
-            $importedCount = $afterCount - $beforeCount;
-            
-            // Log import success
-            \Log::info('Population import successful', [
-                'imported_count' => $importedCount,
-                'total_count' => $afterCount
-            ]);
-            
-            return redirect()->route('admin.population.index')->with('success', "Data penduduk berhasil diimpor! {$importedCount} data baru ditambahkan.");
-            
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            // Handle validation errors
-            $errors = $e->failures();
-            $errorMessages = [];
-            
-            foreach ($errors as $error) {
-                $errorMessages[] = "Baris {$error->row()}: " . implode(', ', $error->errors());
-            }
-            
-            \Log::error('Population import validation failed', [
-                'errors' => $errorMessages,
-                'file_name' => $request->file('file')->getClientOriginalName()
-            ]);
-            
-            return redirect()->back()->with('error', 'Gagal import: ' . implode(' | ', $errorMessages));
-            
+            return redirect()->route('admin.population.index')->with('success', "Import selesai! $imported data berhasil diimpor.");
         } catch (\Exception $e) {
-            // Handle other errors
-            \Log::error('Population import failed', [
-                'error' => $e->getMessage(),
-                'file' => $request->file('file')->getClientOriginalName(),
-                'trace' => $e->getTraceAsString()
-            ]);
-            
             return redirect()->back()->with('error', 'Gagal import: ' . $e->getMessage());
         }
     }

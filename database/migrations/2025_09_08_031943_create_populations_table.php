@@ -53,6 +53,9 @@ return new class extends Migration
             $table->string('status_dinding')->nullable();
             $table->string('status_atap')->nullable();
             $table->string('status_lantai')->nullable();
+
+            // Dusun
+            $table->string('dusun')->nullable();
             
             $table->timestamps();
         });
