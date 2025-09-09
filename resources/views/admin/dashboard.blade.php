@@ -234,7 +234,7 @@
 </div>
 
 <!-- Informasi Desa -->
-<div class="row">
+<div class="row mt-4">
     <div class="col-lg-6 mb-4">
         <div class="card fade-in">
             <div class="card-header bg-transparent border-0">

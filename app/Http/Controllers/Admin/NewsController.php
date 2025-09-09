@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('admin');
-    }
 
     public function index()
     {
@@ -24,6 +19,11 @@ class NewsController extends Controller
     public function create()
     {
         return view('admin.news.create');
+    }
+
+    public function show(News $news)
+    {
+        return view('admin.news.show', compact('news'));
     }
 
     public function store(Request $request)
@@ -50,7 +50,7 @@ class NewsController extends Controller
 
         News::create($data);
 
-        return redirect()->route('admin.news.index')
+        return redirect()->route('admin.news')
             ->with('success', 'Berita berhasil ditambahkan');
     }
 
@@ -87,7 +87,7 @@ class NewsController extends Controller
 
         $news->update($data);
 
-        return redirect()->route('admin.news.index')
+        return redirect()->route('admin.news')
             ->with('success', 'Berita berhasil diperbarui');
     }
 
@@ -99,7 +99,7 @@ class NewsController extends Controller
 
         $news->delete();
 
-        return redirect()->route('admin.news.index')
+        return redirect()->route('admin.news')
             ->with('success', 'Berita berhasil dihapus');
     }
 
@@ -110,7 +110,7 @@ class NewsController extends Controller
             'published_at' => $news->status === 'draft' ? now() : null
         ]);
 
-        return redirect()->route('admin.news.index')
+        return redirect()->route('admin.news')
             ->with('success', 'Status berita berhasil diubah');
     }
 }

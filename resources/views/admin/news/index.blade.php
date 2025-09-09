@@ -54,20 +54,20 @@
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>
-                            <span role="button" class="open-image" data-src="{{ $item['image'] }}">
-                                <img src="{{ $item['image'] }}" alt="{{ $item['title'] }}" 
+                            <span role="button" class="open-image" data-src="{{ $item->image_url }}">
+                                <img src="{{ $item->image_url }}" alt="{{ $item->title }}" 
                                      style="width: 60px; height: 40px; object-fit: cover; border-radius: 5px;">
                             </span>
                         </td>
                         <td>
-                            <strong>{{ $item['title'] }}</strong>
+                            <strong>{{ $item->title }}</strong>
                             <br>
-                            <small class="text-muted">{{ Str::limit($item['content'], 100) }}</small>
+                            <small class="text-muted">{{ Str::limit($item->content, 100) }}</small>
                         </td>
-                        <td>{{ $item['author'] }}</td>
-                        <td>{{ date('d/m/Y', strtotime($item['date'])) }}</td>
+                        <td>{{ $item->author->name ?? '-' }}</td>
+                        <td>{{ $item->published_at ? $item->published_at->format('d/m/Y') : '-' }}</td>
                         <td>
-                            @if($item['status'] == 'published')
+                            @if($item->status == 'published')
                                 <span class="badge bg-success">Published</span>
                             @else
                                 <span class="badge bg-warning">Draft</span>
@@ -75,16 +75,20 @@
                         </td>
                         <td>
                             <div class="btn-group" role="group">
-                                <a href="#" class="btn btn-sm btn-outline-primary">
+                                <a href="{{ route('admin.news.edit', $item->id) }}" class="btn btn-sm btn-outline-primary">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="#" class="btn btn-sm btn-outline-info">
+                                <a href="{{ route('admin.news.show', $item->id) }}" class="btn btn-sm btn-outline-info">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <button type="button" class="btn btn-sm btn-outline-danger">
+                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="deleteNews({{ $item->id }})">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
+                            <form id="deleteNewsForm{{ $item->id }}" action="{{ route('admin.news.destroy', $item->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
                         </td>
                     </tr>
                     @endforeach
@@ -100,7 +104,7 @@
         <div class="card stat-card slide-in">
             <div class="card-body text-center">
                 <i class="fas fa-newspaper fa-3x text-primary mb-3"></i>
-                <h3 class="mb-0">{{ count($news) }}</h3>
+                <h3 class="mb-0">{{ $news->total() ?? $news->count() }}</h3>
                 <small>Total Berita</small>
             </div>
         </div>
@@ -109,7 +113,7 @@
         <div class="card stat-card success slide-in">
             <div class="card-body text-center">
                 <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
-                <h3 class="mb-0">{{ count(array_filter($news, fn($item) => $item['status'] == 'published')) }}</h3>
+                <h3 class="mb-0">{{ $news->where('status', 'published')->count() }}</h3>
                 <small>Published</small>
             </div>
         </div>
@@ -118,7 +122,7 @@
         <div class="card stat-card warning slide-in">
             <div class="card-body text-center">
                 <i class="fas fa-clock fa-3x text-warning mb-3"></i>
-                <h3 class="mb-0">{{ count(array_filter($news, fn($item) => $item['status'] == 'draft')) }}</h3>
+                <h3 class="mb-0">{{ $news->where('status', 'draft')->count() }}</h3>
                 <small>Draft</small>
             </div>
         </div>
@@ -127,7 +131,7 @@
         <div class="card stat-card info slide-in">
             <div class="card-body text-center">
                 <i class="fas fa-calendar fa-3x text-info mb-3"></i>
-                <h3 class="mb-0">{{ count(array_filter($news, fn($item) => date('Y-m', strtotime($item['date'])) == date('Y-m'))) }}</h3>
+                <h3 class="mb-0">{{ $news->filter(function($item){ return $item->published_at && $item->published_at->format('Y-m') == now()->format('Y-m'); })->count() }}</h3>
                 <small>Bulan Ini</small>
             </div>
         </div>

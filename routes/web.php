@@ -8,6 +8,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\OrganizationalStructureController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\PopulationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,14 +53,20 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
         // News Management
-        Route::get('/news', [AdminController::class, 'news'])->name('admin.news');
-        Route::get('/news/create', [AdminController::class, 'createNews'])->name('admin.news.create');
-        Route::post('/news', [AdminController::class, 'storeNews'])->name('admin.news.store');
+        Route::get('/news', [NewsController::class, 'index'])->name('admin.news');
+        Route::get('/news/create', [NewsController::class, 'create'])->name('admin.news.create');
+        Route::post('/news', [NewsController::class, 'store'])->name('admin.news.store');
+        Route::get('/news/edit/{news}', [NewsController::class, 'edit'])->name('admin.news.edit');
+        Route::put('/news/{news}', [NewsController::class, 'update'])->name('admin.news.update');
+        Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('admin.news.destroy');
+        Route::post('/news/{news}/toggle-status', [NewsController::class, 'toggleStatus'])->name('admin.news.toggle-status');
+        Route::get('/news/show/{news}', [NewsController::class, 'show'])->name('admin.news.show');
+
 
          // Population Data
-         Route::get('/population', [AdminController::class, 'population'])->name('admin.population.index');
-         Route::post('/population', [AdminController::class, 'updatePopulation'])->name('admin.population.update');
-         Route::post('population/import', [\App\Http\Controllers\Admin\PopulationController::class, 'importExcel'])->name('admin.population.import');
+         Route::get('/population', [PopulationController::class, 'index'])->name('admin.population.index');
+         Route::post('/population', [PopulationController::class, 'update'])->name('admin.population.update');
+         Route::post('population/import', [PopulationController::class, 'importExcel'])->name('admin.population.import');
  
 
         // Agricultural Data

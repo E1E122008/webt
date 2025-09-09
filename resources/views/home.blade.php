@@ -111,6 +111,44 @@
     </div>
 </section>
 
+<!-- Berita Terbaru Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-title mb-4">
+            <h2>Berita Terbaru</h2>
+            <p>Informasi dan kabar terbaru dari desa</p>
+        </div>
+        <div class="row">
+            @forelse($latestNews as $news)
+                <div class="col-lg-6 col-md-6 mb-4">
+                    <div class="card news-card h-100">
+                        <div class="news-image-container">
+                            <img src="{{ $news->image_url }}" alt="{{ $news->title }}" class="card-img-top">
+                            <div class="news-overlay">
+                                <span class="badge">{{ ucfirst($news->status) }}</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title mb-2">{{ $news->title }}</h5>
+                            <div class="news-meta mb-2">
+                                <small><i class="fas fa-calendar-alt me-1"></i> {{ $news->published_at ? $news->published_at->format('d M Y') : '-' }}</small>
+                                <span class="mx-2">|</span>
+                                <small><i class="fas fa-user me-1"></i> {{ $news->author->name ?? '-' }}</small>
+                            </div>
+                            <p class="card-text">{{ $news->excerpt }}</p>
+                            <a href="#" class="btn btn-outline-primary btn-sm">Baca Selengkapnya</a>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="col-12">
+                    <p class="text-center">Belum ada berita terbaru.</p>
+                </div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
 <!-- About Section -->
 <section class="section">
     <div class="container">

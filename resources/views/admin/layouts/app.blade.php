@@ -51,15 +51,17 @@
         /* Sidebar Styles dengan Gradasi Modern */
         .sidebar {
             background: var(--primary-gradient);
-            height: 650px;
+            height: 100vh;
             color: white;
             box-shadow: 4px 0 20px rgba(46, 139, 87, 0.3);
             position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
             width: 280px;
             z-index: 1000;
             transition: all 0.3s ease;
-            overflow: auto;
-            
+            overflow-y: auto;
         }
 
         .sidebar-header {
@@ -310,14 +312,44 @@
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                width: 80vw;
+                max-width: 320px;
+                z-index: 2000;
+                box-shadow: 4px 0 20px rgba(46, 139, 87, 0.3);
             }
-            
             .sidebar.show {
                 transform: translateX(0);
             }
-            
             .main-content {
                 margin-left: 0;
+            }
+            .sidebar-backdrop {
+                display: block;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0,0,0,0.3);
+                z-index: 1500;
+            }
+            .sidebar-backdrop.hide {
+                display: none;
+            }
+            .sidebar-toggle-btn {
+                display: block;
+            }
+        }
+        @media (min-width: 769px) {
+            .sidebar-toggle-btn {
+                display: none;
+            }
+            .sidebar-backdrop {
+                display: none;
             }
         }
 
@@ -345,11 +377,13 @@
     @yield('styles')
 </head>
 <body>
+    <div class="sidebar-backdrop hide" id="sidebar-backdrop"></div>
+    <button class="btn btn-primary sidebar-toggle-btn" id="sidebar-toggle" style="position:fixed;top:20px;left:20px;z-index:2100;display:none;"><i class="fas fa-bars"></i></button>
     <div class="container-fluid p-0">
         <div class="row g-0">
             <!-- Sidebar -->
             <div class="col-auto">
-                <div class="sidebar">
+                <div class="sidebar" id="sidebar">
                     <div class="sidebar-header">
                         <img src="{{ asset('FOTO/LOGO-removebg-preview.png') }}" alt="Logo Desa Tetembomua" height="50" class="mb-3">
                         <h5>Admin Panel</h5>
@@ -365,38 +399,48 @@
                             <i class="fas fa-newspaper"></i>
                             Berita
                         </a>
-                        <a class="nav-link {{ request()->is('admin/population*') ? 'active' : '' }}" href="{{ route('admin.population.index') }}">
-                            <i class="fas fa-users"></i>
-                            Kelola Penduduk
+                        <!-- Data Master Dropdown -->
+                        <a class="nav-link" data-bs-toggle="collapse" href="#dataMasterMenu" role="button" aria-expanded="false" aria-controls="dataMasterMenu">
+                            <i class="fas fa-database"></i> Data Master <i class="fas fa-chevron-down float-end"></i>
                         </a>
-                        <a class="nav-link {{ request()->is('admin/agricultural*') ? 'active' : '' }}" href="{{ route('admin.agricultural') }}">
-                            <i class="fas fa-seedling"></i>
-                            Data Pertanian
+                        <div class="collapse ms-3" id="dataMasterMenu">
+                            <a class="nav-link {{ request()->is('admin/population*') ? 'active' : '' }}" href="{{ route('admin.population.index') }}">
+                                <i class="fas fa-users"></i> Kelola Penduduk
+                            </a>
+                            <a class="nav-link {{ request()->is('admin/agricultural*') ? 'active' : '' }}" href="{{ route('admin.agricultural') }}">
+                                <i class="fas fa-seedling"></i> Data Pertanian
+                            </a>
+                            <a class="nav-link {{ request()->is('admin/gallery*') ? 'active' : '' }}" href="{{ route('admin.gallery') }}">
+                                <i class="fas fa-images"></i> Galeri
+                            </a>
+                            <a class="nav-link {{ request()->is('admin/structure*') ? 'active' : '' }}" href="{{ route('admin.structure') }}">
+                                <i class="fas fa-sitemap"></i> Struktur Organisasi
+                            </a>
+                        </div>
+                        <!-- Manajemen Dropdown -->
+                        <a class="nav-link" data-bs-toggle="collapse" href="#manajemenMenu" role="button" aria-expanded="false" aria-controls="manajemenMenu">
+                            <i class="fas fa-user-cog"></i> Manajemen <i class="fas fa-chevron-down float-end"></i>
                         </a>
-                        <a class="nav-link {{ request()->is('admin/gallery*') ? 'active' : '' }}" href="{{ route('admin.gallery') }}">
-                            <i class="fas fa-images"></i>
-                            Galeri
+                        <div class="collapse ms-3" id="manajemenMenu">
+                            <a class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}" href="{{ route('admin.users') }}">
+                                <i class="fas fa-user-cog"></i> Manajemen User
+                            </a>
+                            <a class="nav-link {{ request()->is('admin/settings*') ? 'active' : '' }}" href="{{ route('admin.settings') }}">
+                                <i class="fas fa-cog"></i> Pengaturan
+                            </a>
+                        </div>
+                        <!-- Lainnya Dropdown -->
+                        <a class="nav-link" data-bs-toggle="collapse" href="#lainnyaMenu" role="button" aria-expanded="false" aria-controls="lainnyaMenu">
+                            <i class="fas fa-ellipsis-h"></i> Lainnya <i class="fas fa-chevron-down float-end"></i>
                         </a>
-                        <a class="nav-link {{ request()->is('admin/structure*') ? 'active' : '' }}" href="{{ route('admin.structure') }}">
-                            <i class="fas fa-sitemap"></i>
-                            Struktur Organisasi
-                        </a>
-                        <a class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}" href="{{ route('admin.users') }}">
-                            <i class="fas fa-user-cog"></i>
-                            Manajemen User
-                        </a>
-                        <a class="nav-link {{ request()->is('admin/settings*') ? 'active' : '' }}" href="{{ route('admin.settings') }}">
-                            <i class="fas fa-cog"></i>
-                            Pengaturan
-                        </a>
-                        <a class="nav-link {{ request()->is('admin/organizational-structure*') ? 'active' : '' }}" href="{{ route('admin.organizational-structure.index') }}">
-                            <i class="fas fa-sitemap"></i>
-                            Struktur Organisasi
-                        </a>
-                        <a class="nav-link {{ request()->is('admin/gallery-db*') ? 'active' : '' }}" href="{{ route('admin.gallery-db.index') }}">
-                            <i class="fas fa-images"></i>
-                            Galeri (DB)
-                        </a>
+                        <div class="collapse ms-3" id="lainnyaMenu">
+                            <a class="nav-link {{ request()->is('admin/organizational-structure*') ? 'active' : '' }}" href="{{ route('admin.organizational-structure.index') }}">
+                                <i class="fas fa-sitemap"></i> Struktur Organisasi (DB)
+                            </a>
+                            <a class="nav-link {{ request()->is('admin/gallery-db*') ? 'active' : '' }}" href="{{ route('admin.gallery-db.index') }}">
+                                <i class="fas fa-images"></i> Galeri (DB)
+                            </a>
+                        </div>
                         <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
                         <a class="nav-link" href="{{ route('home') }}">
                             <i class="fas fa-home"></i>
@@ -474,6 +518,33 @@
             });
             return false; // Prevent form submission until confirmed
         }
+
+        // Sidebar toggle for mobile
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+        function showSidebar() {
+            sidebar.classList.add('show');
+            sidebarBackdrop.classList.remove('hide');
+        }
+        function hideSidebar() {
+            sidebar.classList.remove('show');
+            sidebarBackdrop.classList.add('hide');
+        }
+        sidebarToggle && sidebarToggle.addEventListener('click', showSidebar);
+        sidebarBackdrop && sidebarBackdrop.addEventListener('click', hideSidebar);
+        // Show toggle button only on mobile
+        function handleResize() {
+            if(window.innerWidth <= 768) {
+                sidebarToggle.style.display = 'block';
+            } else {
+                sidebarToggle.style.display = 'none';
+                sidebar.classList.remove('show');
+                sidebarBackdrop.classList.add('hide');
+            }
+        }
+        window.addEventListener('resize', handleResize);
+        document.addEventListener('DOMContentLoaded', handleResize);
     </script>
 
     @yield('scripts')

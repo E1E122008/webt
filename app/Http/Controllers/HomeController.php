@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Models\News;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $latestNews = News::published()->latest('published_at')->take(4)->get();
+        $siteSettings = \App\Helpers\SettingsHelper::getAll();
+        return view('home', compact('latestNews', 'siteSettings'));
     }
 
     public function about()

@@ -21,15 +21,20 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
+        \Log::info('Mencoba login', ['email' => $request->email]);
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             
             // Check if user is admin
             /** @var User $user */
             $user = Auth::user();
+            \Log::info('Login berhasil', ['user_id' => $user->id, 'email' => $user->email, 'role' => $user->role]);
             if ($user && $user->isAdmin()) {
+                \Log::info('User adalah admin', ['user_id' => $user->id]);
                 return redirect()->intended(route('admin.dashboard'));
             } else {
+                \Log::warning('User bukan admin', ['user_id' => $user->id, 'role' => $user->role]);
                 Auth::logout();
                 return back()->withErrors([
                     'email' => 'Anda tidak memiliki akses admin.',
@@ -37,6 +42,7 @@ class LoginController extends Controller
             }
         }
 
+        \Log::warning('Login gagal', ['email' => $request->email]);
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ])->onlyInput('email');
