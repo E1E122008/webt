@@ -23,17 +23,18 @@
 <!-- About Section -->
 <section class="section">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
+        <!-- Gambaran Umum Desa -->
+        <div class="row mb-5">
+            <div class="col-12">
                 <div class="card fade-in">
-                    <div class="card-body p-5">
-                        <div class="text-center mb-5">
-                            <i class="fas fa-info-circle fa-4x text-primary mb-3"></i>
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-info-circle fa-3x text-primary mb-3"></i>
                             <h2 class="text-primary fw-bold">GAMBARAN UMUM DESA</h2>
                         </div>
 
-                        <div class="row mb-5">
-                            <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
                                 <div class="info-box">
                                     <div class="info-icon">
                                         <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
@@ -44,7 +45,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3">
                                 <div class="info-box">
                                     <div class="info-icon">
                                         <i class="fas fa-ruler-combined fa-2x text-success"></i>
@@ -55,10 +56,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row mb-5">
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3">
                                 <div class="info-box">
                                     <div class="info-icon">
                                         <i class="fas fa-users fa-2x text-warning"></i>
@@ -69,7 +67,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3">
                                 <div class="info-box">
                                     <div class="info-icon">
                                         <i class="fas fa-seedling fa-2x text-info"></i>
@@ -81,13 +79,20 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <hr class="my-5">
-
-                        <h3 class="text-center mb-4">
-                            <i class="fas fa-history me-3 text-success"></i>
-                            Sejarah Terbentuknya Desa
-                        </h3>
+        <!-- Sejarah Desa -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card fade-in">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-history fa-3x text-success mb-3"></i>
+                            <h2 class="text-success fw-bold">SEJARAH TERBENTUKNYA DESA</h2>
+                        </div>
 
                         <div class="timeline">
                             <div class="timeline-item">
@@ -122,20 +127,25 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <hr class="my-5">
+        <!-- Asal Usul Nama Desa -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card fade-in">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-landmark fa-3x text-warning mb-3"></i>
+                            <h2 class="text-warning fw-bold">ASAL USUL NAMA DESA</h2>
+                        </div>
 
-                        <h3 class="text-center mb-4">
-                            <i class="fas fa-landmark me-3 text-warning"></i>
-                            Asal Usul Nama Desa
-                        </h3>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="text-center">
-                                    <i class="fas fa-bridge fa-4x text-primary mb-3"></i>
-                                    <h4 class="text-primary">{{ $siteSettings['village_name'] ?? 'Tetembomua' }}</h4>
-                                </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-6 text-center">
+                                <i class="fas fa-bridge fa-4x text-primary mb-3"></i>
+                                <h4 class="text-primary">{{ $siteSettings['village_name'] ?? 'Tetembomua' }}</h4>
                             </div>
                             <div class="col-md-6">
                                 <p class="lead">
@@ -144,13 +154,20 @@
                                 </p>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <hr class="my-5">
-
-                        <h3 class="text-center mb-4">
-                            <i class="fas fa-bullseye me-3 text-danger"></i>
-                            Visi Desa
-                        </h3>
+        <!-- Visi Desa -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card fade-in">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-bullseye fa-3x text-danger mb-3"></i>
+                            <h2 class="text-danger fw-bold">VISI DESA</h2>
+                        </div>
 
                         <div class="vision-box">
                             <blockquote class="blockquote text-center">
@@ -161,13 +178,20 @@
                                 </p>
                             </blockquote>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <hr class="my-5">
-
-                        <h3 class="text-center mb-4">
-                            <i class="fas fa-chart-line me-3 text-info"></i>
-                            Potensi Unggulan
-                        </h3>
+        <!-- Potensi Unggulan -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card fade-in">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-chart-line fa-3x text-info mb-3"></i>
+                            <h2 class="text-info fw-bold">POTENSI UNGGULAN</h2>
+                        </div>
 
                         <div class="row">
                             <div class="col-lg-4 col-md-6 mb-4">
@@ -230,13 +254,20 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <hr class="my-5">
-
-                        <h3 class="text-center mb-4">
-                            <i class="fas fa-user-tie me-3 text-success"></i>
-                            Kepemimpinan Saat Ini
-                        </h3>
+        <!-- Kepemimpinan Saat Ini -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card fade-in">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-user-tie fa-3x text-success mb-3"></i>
+                            <h2 class="text-success fw-bold">KEPEMIMPINAN SAAT INI</h2>
+                        </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-4">
@@ -276,7 +307,76 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Program SDGs Desa -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card fade-in">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-globe fa-3x text-info mb-3"></i>
+                            <h2 class="text-info fw-bold">PROGRAM SDGs DESA</h2>
+                            <p class="text-muted">Sustainable Development Goals untuk pembangunan berkelanjutan</p>
+                        </div>
+
+                        <!-- SDGs Program Cards -->
+                        <div class="row g-4">
+                            <!-- SDG 1: No Poverty -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="sdgs-card sdgs-1">
+                                    <div class="sdgs-number">1</div>
+                                    <h5>Tanpa Kemiskinan</h5>
+                                    <p>Program pemberdayaan ekonomi masyarakat miskin</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check"></i>Bantuan UMKM</li>
+                                        <li><i class="fas fa-check"></i>Pelatihan Wirausaha</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- SDG 2: Zero Hunger -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="sdgs-card sdgs-2">
+                                    <div class="sdgs-number">2</div>
+                                    <h5>Tanpa Kelaparan</h5>
+                                    <p>Program ketahanan pangan dan pertanian berkelanjutan</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check"></i>Diversifikasi Pangan</li>
+                                        <li><i class="fas fa-check"></i>Pertanian Organik</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- SDG 3: Good Health -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="sdgs-card sdgs-3">
+                                    <div class="sdgs-number">3</div>
+                                    <h5>Kehidupan Sehat</h5>
+                                    <p>Program kesehatan dan kesejahteraan masyarakat</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check"></i>Posyandu Lansia</li>
+                                        <li><i class="fas fa-check"></i>Sanitasi Lingkungan</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- SDG 4: Quality Education -->
+                            <div class="col-lg-3 col-md-6">
+                                <div class="sdgs-card sdgs-4">
+                                    <div class="sdgs-number">4</div>
+                                    <h5>Pendidikan Berkualitas</h5>
+                                    <p>Program pendidikan yang inklusif dan berkualitas</p>
+                                    <ul class="list-unstyled">
+                                        <li><i class="fas fa-check"></i>Beasiswa Anak</li>
+                                        <li><i class="fas fa-check"></i>Perpustakaan Desa</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -456,6 +556,89 @@
 .open-image:hover {
     transform: scale(1.05);
 }
+
+/* ========================================
+   SDGs CARDS STYLING
+   ======================================== */
+
+.sdgs-card {
+    background: white;
+    color: #333;
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: left;
+    transition: all 0.3s ease;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-left: 4px solid;
+}
+
+.sdgs-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* SDGs Number */
+.sdgs-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    opacity: 0.3;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #333;
+    line-height: 1;
+}
+
+/* SDGs Card Content */
+.sdgs-card h5 {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    position: relative;
+    z-index: 1;
+    color: #333;
+    padding-right: 3rem;
+    font-size: 1.1rem;
+}
+
+.sdgs-card p {
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* SDGs List */
+.sdgs-card ul {
+    margin: 0;
+    padding: 0;
+}
+
+.sdgs-card ul li {
+    margin-bottom: 0.4rem;
+    position: relative;
+    z-index: 1;
+    color: #555;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+
+.sdgs-card .fas.fa-check {
+    color: #28a745;
+    margin-right: 0.5rem;
+    font-size: 0.7rem;
+}
+
+/* SDGs Color Themes */
+.sdgs-1 { border-left-color: #E5243B; } /* SDG 1 - Red */
+.sdgs-2 { border-left-color: #DDA63A; } /* SDG 2 - Yellow/Orange */
+.sdgs-3 { border-left-color: #4C9F38; } /* SDG 3 - Green */
+.sdgs-4 { border-left-color: #C5192D; } /* SDG 4 - Red/Pink */
 </style>
 
 <!-- Image Preview Modal -->

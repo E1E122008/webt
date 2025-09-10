@@ -255,6 +255,29 @@
                             </p>
                         </div>
                     </div>
+                    
+                    <!-- TikTok -->
+                    <div class="col-md-3 mb-3">
+                        <div class="social-media-item text-center">
+                            <div class="social-icon tiktok">
+                                <i class="fab fa-tiktok"></i>
+                            </div>
+                            <h6 class="mt-2">TikTok</h6>
+                            <p class="text-muted mb-1">
+                                <strong>Handle:</strong> {{ $settings['social_media']['tiktok_handle'] ?? 'Belum diatur' }}
+                            </p>
+                            <p class="text-muted mb-0">
+                                <strong>URL:</strong> 
+                                @if(!empty($settings['social_media']['tiktok']))
+                                    <a href="{{ $settings['social_media']['tiktok'] }}" target="_blank" class="text-decoration-none">
+                                        {{ Str::limit($settings['social_media']['tiktok'], 30) }}
+                                    </a>
+                                @else
+                                    Belum diatur
+                                @endif
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -480,6 +503,24 @@
                                        placeholder="+62 812-3456-7890">
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="tiktok_url" class="form-label">
+                                    <i class="fab fa-tiktok text-dark me-2"></i>TikTok URL
+                                </label>
+                                <input type="url" class="form-control" id="tiktok_url" name="social_media[tiktok]" 
+                                       value="{{ $settings['social_media']['tiktok'] ?? '' }}" 
+                                       placeholder="https://tiktok.com/@desatetembomua">
+                            </div>
+                            <div class="mb-3">
+                                <label for="tiktok_handle" class="form-label">
+                                    <i class="fab fa-tiktok text-dark me-2"></i>TikTok Handle
+                                </label>
+                                <input type="text" class="form-control" id="tiktok_handle" name="social_media[tiktok_handle]" 
+                                       value="{{ $settings['social_media']['tiktok_handle'] ?? '' }}" 
+                                       placeholder="desatetembomua">
+                            </div>
+                        </div>
                     </div>
                     
                     <hr>
@@ -620,6 +661,10 @@
 
 .social-icon.whatsapp {
     background: linear-gradient(135deg, #25d366, #128c7e);
+}
+
+.social-icon.tiktok {
+    background: linear-gradient(135deg, #ff0050, #00f2ea);
 }
 </style>
 @endsection

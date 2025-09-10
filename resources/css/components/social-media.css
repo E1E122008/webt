@@ -1,0 +1,215 @@
+/* ===== SOCIAL MEDIA COMPONENT ===== */
+
+/* Base Layout */
+.social-media-component .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.social-media-component .social-links-sm {
+    gap: 15px;
+}
+
+.social-media-component .social-links-lg {
+    gap: 25px;
+}
+
+/* Card Layout */
+.social-cards .social-item {
+    flex: 0 0 auto;
+}
+
+.social-cards .social-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 120px;
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.social-cards .social-links-sm .social-link {
+    width: 150px;
+    height: 100px;
+    padding: 15px;
+}
+
+.social-cards .social-links-lg .social-link {
+    width: 250px;
+    height: 140px;
+    padding: 25px;
+}
+
+/* Icons */
+.social-cards .social-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.social-cards .social-links-sm .social-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.social-cards .social-links-lg .social-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+/* Text Styling */
+.social-cards .social-info {
+    text-align: center;
+}
+
+.social-cards .social-name {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 4px;
+    color: #333;
+}
+
+.social-cards .social-links-sm .social-name {
+    font-size: 14px;
+}
+
+.social-cards .social-links-lg .social-name {
+    font-size: 18px;
+}
+
+.social-cards .social-handle {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+}
+
+.social-cards .social-links-sm .social-handle {
+    font-size: 11px;
+}
+
+.social-cards .social-links-lg .social-handle {
+    font-size: 14px;
+}
+
+/* Platform Colors */
+.social-cards .social-link.facebook .social-icon {
+    background: #1877f2;
+    color: white;
+}
+
+.social-cards .social-link.instagram .social-icon {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white;
+}
+
+.social-cards .social-link.youtube .social-icon {
+    background: #ff0000;
+    color: white;
+}
+
+.social-cards .social-link.whatsapp .social-icon {
+    background: #25d366;
+    color: white;
+}
+
+/* Hover Effects */
+.social-cards .social-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    border-color: var(--primary-green, #2e7d32);
+}
+
+.social-cards .social-link.facebook:hover {
+    border-color: #1877f2;
+}
+
+.social-cards .social-link.instagram:hover {
+    border-color: #e6683c;
+}
+
+.social-cards .social-link.youtube:hover {
+    border-color: #ff0000;
+}
+
+.social-cards .social-link.whatsapp:hover {
+    border-color: #25d366;
+}
+
+/* Button Layout */
+.social-buttons .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: var(--primary-green, #2e7d32);
+    color: white;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 18px;
+}
+
+.social-buttons .social-links-sm .social-link {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.social-buttons .social-links-lg .social-link {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+}
+
+.social-buttons .social-link:hover {
+    background: var(--dark-green, #1b5e20);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.social-buttons .social-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .social-cards .social-link {
+        width: 150px;
+        height: 100px;
+        padding: 15px;
+    }
+    
+    .social-cards .social-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .social-cards .social-name {
+        font-size: 14px;
+    }
+    
+    .social-cards .social-handle {
+        font-size: 11px;
+    }
+}

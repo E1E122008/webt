@@ -49,7 +49,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
         // Semua route admin lain lewat middleware admin
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['auth', 'admin'])->group(function () {
         Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
         // News Management

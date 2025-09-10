@@ -52,7 +52,9 @@ class SettingsHelper
                         'youtube' => 'https://youtube.com/@desatetembomua',
                         'youtube_handle' => 'Desa Tetembomua',
                         'whatsapp' => 'https://wa.me/6281234567890',
-                        'whatsapp_number' => '+62 812-3456-7890'
+                        'whatsapp_number' => '+62 812-3456-7890',
+                        'tiktok' => 'https://tiktok.com/@desatetembomua',
+                        'tiktok_handle' => 'desatetembomua'
                     ],
                     'website_status' => true,
                     'maintenance_mode' => false
