@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\OrganizationalStructureController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\PopulationController;
+use App\Http\Controllers\FacilityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,12 +35,17 @@ Route::prefix('pertanian')->group(function () {
     Route::get('/komoditas', [PertanianController::class, 'komoditas'])->name('pertanian.komoditas');
 });
 
+
+
 // Lain-lain
 Route::get('/news', [HomeController::class, 'news'])->name('news');
 Route::get('/potensi', [HomeController::class, 'potensi'])->name('potensi');
 Route::get('/program', [HomeController::class, 'program'])->name('program');
 Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
 Route::get('/statistik', [HomeController::class, 'statistik'])->name('statistik');
+
+// Sarana & Prasarana (public CRUD)
+Route::resource('facilities', FacilityController::class);
 
 // =================== Admin Routes ===================
 Route::prefix('admin')->group(function () {
@@ -105,5 +111,9 @@ Route::prefix('admin')->group(function () {
         Route::resource('organizational-structure', OrganizationalStructureController::class, ['as' => 'admin']);
         Route::post('organizational-structure/{id}/toggle-status', [OrganizationalStructureController::class, 'toggleStatus'])->name('admin.organizational-structure.toggle-status');
         Route::post('organizational-structure/reorder', [OrganizationalStructureController::class, 'reorder'])->name('admin.organizational-structure.reorder');
+
+        // Sarana & Prasarana
+        Route::get('/facilities', [FacilityController::class, 'index'])->name('admin.facilities');
+        Route::get('/facilities/{id}', [FacilityController::class, 'show'])->name('admin.facilities.show');           
     });
 });

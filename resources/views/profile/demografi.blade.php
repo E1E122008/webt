@@ -483,6 +483,9 @@
             </div>
         </div>
 
+        @php
+            $facilitiesByBidang = isset($facilities) ? $facilities->groupBy('bidang') : collect();
+        @endphp
         <!-- Sarana Prasarana -->
         <div class="row">
             <div class="col-12">
@@ -491,108 +494,36 @@
                         <div class="text-center mb-5">
                             <i class="fas fa-building fa-4x text-info mb-3"></i>
                             <h2 class="text-info fw-bold">SARANA PRASARANA</h2>
-        </div>
-
-        <div class="row">
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="facility-card">
-                                    <div class="facility-header">
-                                        <i class="fas fa-heartbeat fa-2x text-danger"></i>
-                                        <h5 class="text-danger">Kesehatan</h5>
+                        </div>
+                        @forelse($facilitiesByBidang as $bidang => $items)
+                            <h4 class="mt-4 mb-3 text-uppercase">{{ $bidang ?? 'Lainnya' }}</h4>
+                            <div class="row">
+                                @foreach($items as $facility)
+                                    <div class="col-lg-4 col-md-6 mb-4">
+                                        <div class="facility-card">
+                                            <div class="facility-header">
+                                                <i class="fas fa-tools fa-2x text-info"></i>
+                                                <h5 class="text-info">{{ $facility->nama }}</h5>
+                                            </div>
+                                            <div class="facility-body">
+                                                @if($facility->gambar)
+                                                    <img src="{{ asset('storage/' . $facility->gambar) }}" alt="{{ $facility->nama }}" class="img-fluid mb-2" style="max-height:100px;">
+                                                @endif
+                                                <p>{{ $facility->deskripsi }}</p>
+                                                <span class="badge bg-secondary">{{ ucfirst($facility->jenis) }}</span>
+                                                <span class="badge bg-success">{{ ucfirst($facility->status) }}</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="facility-body">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fas fa-check text-success me-2"></i>Bidan: 1 orang</li>
-                                            <li><i class="fas fa-check text-success me-2"></i>Posyandu: 1 unit</li>
-                                            <li><i class="fas fa-times text-danger me-2"></i>Puskesmas: 0 unit</li>
-                                            <li><i class="fas fa-times text-danger me-2"></i>Puskesmas Pembantu: 0 unit</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="facility-card">
-                                    <div class="facility-header">
-                                        <i class="fas fa-graduation-cap fa-2x text-primary"></i>
-                                        <h5 class="text-primary">Pendidikan</h5>
-                                    </div>
-                                    <div class="facility-body">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fas fa-check text-success me-2"></i>TK Meohai: 1 unit (Baik)</li>
-                                            <li><i class="fas fa-times text-danger me-2"></i>SD Negeri: 0 unit</li>
-                                            <li><i class="fas fa-times text-danger me-2"></i>SMP: 0 unit</li>
-                                            <li><i class="fas fa-times text-danger me-2"></i>SMA: 0 unit</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                        @empty
+                            <div class="col-12">
+                                <p class="text-center">Belum ada data sarana atau prasarana.</p>
                             </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="facility-card">
-                                    <div class="facility-header">
-                                        <i class="fas fa-mosque fa-2x text-success"></i>
-                                        <h5 class="text-success">Keagamaan</h5>
-                                    </div>
-                                    <div class="facility-body">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fas fa-check text-success me-2"></i>Mesjid Al-Muhajirin: 1 unit (Baik)</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="facility-card">
-                                    <div class="facility-header">
-                                        <i class="fas fa-road fa-2x text-warning"></i>
-                                        <h5 class="text-warning">Infrastruktur</h5>
-                                    </div>
-                                    <div class="facility-body">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fas fa-check text-success me-2"></i>Jalan beraspal: 3 Km</li>
-                                            <li><i class="fas fa-check text-success me-2"></i>Jalan berbatu/tanah: 7 Km</li>
-                                            <li><i class="fas fa-check text-success me-2"></i>Jembatan kecil: 8 buah</li>
-                                            <li><i class="fas fa-check text-success me-2"></i>Jembatan sedang/besar: 7 buah</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="facility-card">
-                                    <div class="facility-header">
-                                        <i class="fas fa-tint fa-2x text-info"></i>
-                                        <h5 class="text-info">Air & Sanitasi</h5>
-                                    </div>
-                                    <div class="facility-body">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fas fa-check text-success me-2"></i>Jaringan irigasi: 1 buah</li>
-                                            <li><i class="fas fa-check text-success me-2"></i>WC Umum: 2 buah</li>
-                                            <li><i class="fas fa-times text-danger me-2"></i>Sumur Bor: 0 unit</li>
-                                        </ul>
+                        @endforelse
                     </div>
                 </div>
-            </div>
-
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="facility-card">
-                                    <div class="facility-header">
-                                        <i class="fas fa-futbol fa-2x text-success"></i>
-                                        <h5 class="text-success">Olahraga & Rekreasi</h5>
-                                    </div>
-                                    <div class="facility-body">
-                                        <ul class="list-unstyled">
-                                            <li><i class="fas fa-check text-success me-2"></i>Fasilitas Olahraga: 1 buah</li>
-                                            <li><i class="fas fa-times text-danger me-2"></i>Lapangan Bola: 0 unit</li>
-                                            <li><i class="fas fa-times text-danger me-2"></i>Gedung Olahraga: 0 unit</li>
-                                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-            </div>
             </div>
         </div>
     </div>

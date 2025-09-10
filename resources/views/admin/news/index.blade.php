@@ -150,18 +150,9 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const previewModal = document.getElementById('newsImagePreviewModal');
-    const previewImg = document.getElementById('newsImagePreviewModalImg');
-    const bsModal = previewModal ? new bootstrap.Modal(previewModal) : null;
-    
-    // Open image preview modal
-    document.querySelectorAll('.open-image').forEach(el => {
-        el.addEventListener('click', () => {
-            if (!bsModal) return;
-            previewImg.src = el.getAttribute('data-src');
-            bsModal.show();
-        });
-    });
-});
+function deleteNews(id) {
+    if (confirm('Yakin ingin menghapus berita ini?')) {
+        document.getElementById('deleteNewsForm' + id).submit();
+    }
+}
 </script>

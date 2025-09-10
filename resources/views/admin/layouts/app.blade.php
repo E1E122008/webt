@@ -399,6 +399,9 @@
                             <i class="fas fa-newspaper"></i>
                             Berita
                         </a>
+                        <a class="nav-link {{ request()->is('admin/facilities*') ? 'active' : '' }}" href="{{ route('admin.facilities') }}">
+                            <i class="fas fa-building"></i> Sarana & Prasarana
+                        </a>
                         <!-- Data Master Dropdown -->
                         <a class="nav-link" data-bs-toggle="collapse" href="#dataMasterMenu" role="button" aria-expanded="false" aria-controls="dataMasterMenu">
                             <i class="fas fa-database"></i> Data Master <i class="fas fa-chevron-down float-end"></i>
