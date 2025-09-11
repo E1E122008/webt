@@ -37,83 +37,11 @@
     </div>
 </section>
 
-<!-- Quick Stats Section -->
-<section class="section bg-light">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-2 col-md-4 mb-4">
-                <div class="card text-center h-100 stats-card">
-                    <div class="card-body">
-                        <div class="stats-icon">
-                            <i class="fas fa-home fa-3x"></i>
-                        </div>
-                        <h4 class="card-title stats-number">850+</h4>
-                        <p class="card-text">Kepala Keluarga</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 mb-4">
-                <div class="card text-center h-100 stats-card">
-                    <div class="card-body">
-                        <div class="stats-icon">
-                            <i class="fas fa-graduation-cap fa-3x"></i>
-                        </div>
-                        <h4 class="card-title stats-number">3</h4>
-                        <p class="card-text">Sekolah</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 mb-4">
-                <div class="card text-center h-100 stats-card">
-                    <div class="card-body">
-                        <div class="stats-icon">
-                            <i class="fas fa-heartbeat fa-3x"></i>
-                        </div>
-                        <h4 class="card-title stats-number">1</h4>
-                        <p class="card-text">Posyandu</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 mb-4">
-                <div class="card text-center h-100 stats-card">
-                    <div class="card-body">
-                        <div class="stats-icon">
-                            <i class="fas fa-seedling fa-3x"></i>
-                        </div>
-                        <h4 class="card-title stats-number">500+</h4>
-                        <p class="card-text">Petani</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 mb-4">
-                <div class="card text-center h-100 stats-card">
-                    <div class="card-body">
-                        <div class="stats-icon">
-                            <i class="fas fa-industry fa-3x"></i>
-                        </div>
-                        <h4 class="card-title stats-number">25+</h4>
-                        <p class="card-text">UMKM</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 mb-4">
-                <div class="card text-center h-100 stats-card">
-                    <div class="card-body">
-                        <div class="stats-icon">
-                            <i class="fas fa-mosque fa-3x"></i>
-                        </div>
-                        <h4 class="card-title stats-number">5</h4>
-                        <p class="card-text">Tempat Ibadah</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 <!-- Berita Terbaru Section -->
 <section class="section">
-    <div class="container">
+    <div class="container ">
         <div class="section-title mb-4">
             <h2>Berita Terbaru</h2>
             <p>Informasi dan kabar terbaru dari desa</p>
