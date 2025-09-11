@@ -93,14 +93,34 @@ class NewsController extends Controller
 
     public function destroy(News $news)
     {
-        if ($news->image) {
-            Storage::disk('public')->delete($news->image);
+        try {
+            if ($news->image) {
+                Storage::disk('public')->delete($news->image);
+            }
+
+            $newsTitle = $news->title;
+            $news->delete();
+
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Berita "' . $newsTitle . '" berhasil dihapus'
+                ]);
+            }
+
+            return redirect()->route('admin.news')
+                ->with('success', 'Berita berhasil dihapus');
+        } catch (\Exception $e) {
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Gagal menghapus berita: ' . $e->getMessage()
+                ], 500);
+            }
+
+            return redirect()->route('admin.news')
+                ->with('error', 'Gagal menghapus berita');
         }
-
-        $news->delete();
-
-        return redirect()->route('admin.news')
-            ->with('success', 'Berita berhasil dihapus');
     }
 
     public function toggleStatus(News $news)

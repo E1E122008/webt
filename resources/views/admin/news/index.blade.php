@@ -151,8 +151,167 @@
 
 <script>
 function deleteNews(id) {
-    if (confirm('Yakin ingin menghapus berita ini?')) {
-        document.getElementById('deleteNewsForm' + id).submit();
-    }
+    Swal.fire({
+        title: 'Konfirmasi Hapus',
+        text: 'Apakah Anda yakin ingin menghapus berita ini?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, Hapus!',
+        cancelButtonText: 'Batal',
+        reverseButtons: true,
+        customClass: {
+            popup: 'swal-popup-custom',
+            title: 'swal-title-custom',
+            content: 'swal-content-custom',
+            confirmButton: 'swal-confirm-custom',
+            cancelButton: 'swal-cancel-custom'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading
+            Swal.fire({
+                title: 'Menghapus...',
+                text: 'Sedang menghapus berita',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            
+            // Get form data
+            const form = document.getElementById('deleteNewsForm' + id);
+            const formData = new FormData(form);
+            
+            // Send AJAX request
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: data.message,
+                        icon: 'success',
+                        confirmButtonColor: '#28a745',
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            popup: 'swal-popup-custom',
+                            title: 'swal-title-custom',
+                            content: 'swal-content-custom',
+                            confirmButton: 'swal-success-custom'
+                        }
+                    }).then(() => {
+                        // Reload page to update the list
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: data.message,
+                        icon: 'error',
+                        confirmButtonColor: '#dc3545',
+                        confirmButtonText: 'OK',
+                        customClass: {
+                            popup: 'swal-popup-custom',
+                            title: 'swal-title-custom',
+                            content: 'swal-content-custom',
+                            confirmButton: 'swal-confirm-custom'
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Terjadi kesalahan saat menghapus berita',
+                    icon: 'error',
+                    confirmButtonColor: '#dc3545',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        popup: 'swal-popup-custom',
+                        title: 'swal-title-custom',
+                        content: 'swal-content-custom',
+                        confirmButton: 'swal-confirm-custom'
+                    }
+                });
+            });
+        }
+    });
 }
 </script>
+
+<style>
+/* SweetAlert Custom Styling */
+.swal-popup-custom {
+    border-radius: 15px !important;
+    font-family: 'Poppins', sans-serif !important;
+}
+
+.swal-title-custom {
+    color: var(--text-dark) !important;
+    font-weight: 600 !important;
+    font-size: 1.5rem !important;
+}
+
+.swal-content-custom {
+    color: var(--text-light) !important;
+    font-size: 1rem !important;
+}
+
+.swal-confirm-custom {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    padding: 0.75rem 1.5rem !important;
+    font-size: 0.9rem !important;
+}
+
+.swal-confirm-custom:hover {
+    background-color: #c82333 !important;
+    border-color: #bd2130 !important;
+}
+
+.swal-cancel-custom {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    padding: 0.75rem 1.5rem !important;
+    font-size: 0.9rem !important;
+}
+
+.swal-cancel-custom:hover {
+    background-color: #5a6268 !important;
+    border-color: #545b62 !important;
+}
+
+.swal-success-custom {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    padding: 0.75rem 1.5rem !important;
+    font-size: 0.9rem !important;
+}
+
+.swal-success-custom:hover {
+    background-color: #218838 !important;
+    border-color: #1e7e34 !important;
+}
+
+/* SweetAlert Loading */
+.swal2-loader {
+    border-color: var(--primary-green) transparent var(--primary-green) transparent !important;
+}
+</style>

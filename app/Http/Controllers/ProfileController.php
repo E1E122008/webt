@@ -30,7 +30,7 @@ class ProfileController extends Controller
     public function demografi()
     {
         // Ambil data sarana & prasarana dari database
-        $facilities = \App\Models\Facility::orderBy('type')->orderBy('name')->get();
+        $facilities = \App\Models\Facility::orderBy('jenis')->orderBy('nama')->get();
         return view('profile.demografi', compact('facilities'));
     }
 }

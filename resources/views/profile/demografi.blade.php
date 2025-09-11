@@ -495,33 +495,100 @@
                             <i class="fas fa-building fa-4x text-info mb-3"></i>
                             <h2 class="text-info fw-bold">SARANA PRASARANA</h2>
                         </div>
-                        @forelse($facilitiesByBidang as $bidang => $items)
-                            <h4 class="mt-4 mb-3 text-uppercase">{{ $bidang ?? 'Lainnya' }}</h4>
-                            <div class="row">
-                                @foreach($items as $facility)
-                                    <div class="col-lg-4 col-md-6 mb-4">
-                                        <div class="facility-card">
-                                            <div class="facility-header">
-                                                <i class="fas fa-tools fa-2x text-info"></i>
-                                                <h5 class="text-info">{{ $facility->nama }}</h5>
-                                            </div>
-                                            <div class="facility-body">
-                                                @if($facility->gambar)
-                                                    <img src="{{ asset('storage/' . $facility->gambar) }}" alt="{{ $facility->nama }}" class="img-fluid mb-2" style="max-height:100px;">
-                                                @endif
-                                                <p>{{ $facility->deskripsi }}</p>
-                                                <span class="badge bg-secondary">{{ ucfirst($facility->jenis) }}</span>
-                                                <span class="badge bg-success">{{ ucfirst($facility->status) }}</span>
+                        <div class="row justify-content-center">
+                            @if($facilitiesByBidang->count() > 0)
+                                @foreach($facilitiesByBidang as $bidang => $items)
+                                    @if($items->count() > 0)
+                                        <div class="col-lg-4 col-md-6 mb-4">
+                                            <div class="facility-category-card">
+                                                <div class="facility-category-header">
+                                                    @php
+                                                        $categoryIcons = [
+                                                            'Kesehatan' => 'fas fa-heartbeat',
+                                                            'Pendidikan' => 'fas fa-graduation-cap', 
+                                                            'Keagamaan' => 'fas fa-mosque',
+                                                            'Infrastruktur' => 'fas fa-tools',
+                                                            'Air & Sanitasi' => 'fas fa-tint',
+                                                            'Olahraga & Rekreasi' => 'fas fa-dumbbell',
+                                                            'Lainnya' => 'fas fa-building'
+                                                        ];
+                                                        $categoryColors = [
+                                                            'Kesehatan' => 'text-danger',
+                                                            'Pendidikan' => 'text-primary',
+                                                            'Keagamaan' => 'text-success',
+                                                            'Infrastruktur' => 'text-warning',
+                                                            'Air & Sanitasi' => 'text-info',
+                                                            'Olahraga & Rekreasi' => 'text-success',
+                                                            'Lainnya' => 'text-secondary'
+                                                        ];
+                                                        $icon = $categoryIcons[$bidang] ?? 'fas fa-building';
+                                                        $color = $categoryColors[$bidang] ?? 'text-secondary';
+                                                    @endphp
+                                                    <i class="{{ $icon }} fa-2x {{ $color }}"></i>
+                                                    <h5 class="{{ $color }}">{{ $bidang ?? 'Lainnya' }}</h5>
+                                                </div>
+                                                <div class="facility-category-body">
+                                                    @php
+                                                        $totalUnits = $items->sum('jumlah_unit');
+                                                    @endphp
+                                                    @foreach($items as $facility)
+                                                            <div class="facility-item-content">
+                                                                <div class="facility-info">
+                                                                    <span class="facility-name" 
+                                                                          title="{{ $facility->nama }}"
+                                                                          data-bs-toggle="tooltip" 
+                                                                          data-bs-placement="top">
+                                                                        {{ $facility->nama }}
+                                                                    </span>
+                                                                    <span class="facility-count">{{ $facility->jumlah_unit }} unit</span>
+                                                                </div>
+                                                                <div class="facility-status">
+                                                                    @if($facility->status == 'aktif')
+                                                                        <span class="text-success" title="Status: Aktif">
+                                                                            <i class="fas fa-check"></i>
+                                                                        </span>
+                                                                    @else
+                                                                        <span class="text-danger" title="Status: Nonaktif">
+                                                                            <i class="fas fa-times"></i>
+                                                                        </span>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            @if($facility->deskripsi)
+                                                                <div class="facility-description" 
+                                                                     title="{{ $facility->deskripsi }}"
+                                                                     data-bs-toggle="tooltip" 
+                                                                     data-bs-placement="bottom">
+                                                                    <small class="text-muted">
+                                                                        {{ Str::limit($facility->deskripsi, 50) }}
+                                                                        @if(strlen($facility->deskripsi) > 50)
+                                                                            <span class="text-primary">...lihat selengkapnya</span>
+                                                                        @endif
+                                                                    </small>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                    @if($totalUnits > 0)
+                                                        <div class="facility-total text-center mt-3">
+                                                            <small class="text-muted">(jumlah {{ $totalUnits }})</small>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 @endforeach
-                            </div>
-                        @empty
-                            <div class="col-12">
-                                <p class="text-center">Belum ada data sarana atau prasarana.</p>
-                            </div>
-                        @endforelse
+                            @else
+                                <div class="col-12">
+                                    <div class="text-center py-5">
+                                        <i class="fas fa-building fa-4x text-muted mb-4"></i>
+                                        <h4 class="text-muted">Belum ada data sarana atau prasarana</h4>
+                                        <p class="text-muted">Data sarana dan prasarana akan ditampilkan di sini.</p>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -634,6 +701,191 @@
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     text-align: center;
 }
+
+.facility-category-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-left: 4px solid var(--primary-green);
+    height: 100%;
+    transition: all 0.3s ease;
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+.facility-category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(46, 139, 87, 0.2);
+}
+
+.facility-category-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(46, 139, 87, 0.1);
+    text-align: center;
+}
+
+.facility-category-header h5 {
+    text-align: center;
+    width: 100%;
+}
+
+.facility-category-header i {
+    margin-right: 1rem;
+}
+
+.facility-category-header h5 {
+    margin-bottom: 0;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.facility-category-body {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.facility-total {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(46, 139, 87, 0.1);
+}
+
+.facility-item {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: rgba(46, 139, 87, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-green);
+}
+
+.facility-item:last-child {
+    margin-bottom: 0;
+}
+
+.facility-item {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: rgba(46, 139, 87, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-green);
+    transition: all 0.3s ease;
+}
+
+.facility-item:hover {
+    background: rgba(46, 139, 87, 0.1);
+    transform: translateX(2px);
+}
+
+.facility-item:last-child {
+    margin-bottom: 0;
+}
+
+.facility-item-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.facility-info {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 1rem;
+    min-width: 0; /* Allow text truncation */
+}
+
+.facility-name {
+    font-weight: 500;
+    color: var(--text-dark);
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    cursor: help;
+}
+
+.facility-count {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.facility-status {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+}
+
+.facility-description {
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 0.25rem;
+    cursor: help;
+    word-wrap: break-word;
+    line-height: 1.3;
+}
+
+.facility-description:hover {
+    color: var(--primary-green) !important;
+}
+
+/* Tooltip customization */
+.tooltip {
+    font-size: 0.875rem;
+}
+
+.tooltip .tooltip-inner {
+    max-width: 300px;
+    text-align: left;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 8px;
+    padding: 0.75rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .facility-category-card {
+        max-width: 100%;
+        margin: 0 1rem;
+    }
+    
+    .facility-name {
+        max-width: 150px;
+    }
+    
+    .facility-info {
+        gap: 0.5rem;
+    }
+    
+    .facility-item-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .facility-status {
+        margin-left: 0;
+        align-self: flex-end;
+    }
+}
+
+/* Empty state styling */
+.facility-item.empty {
+    background: rgba(108, 117, 125, 0.05);
+    border-left-color: #6c757d;
+}
+
+.facility-item.empty .facility-name {
+    color: #6c757d;
+}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -732,6 +984,38 @@ const occupationChart = new Chart(ctx, {
             }
         }
     }
+});
+
+// Initialize Bootstrap tooltips
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl, {
+            delay: { show: 500, hide: 100 },
+            html: true
+        });
+    });
+    
+    // Add click to copy functionality for facility names
+    document.querySelectorAll('.facility-name').forEach(function(element) {
+        element.addEventListener('click', function() {
+            // Copy text to clipboard
+            navigator.clipboard.writeText(this.textContent).then(function() {
+                // Show temporary success message
+                var originalText = element.textContent;
+                element.textContent = 'Copied!';
+                element.style.color = 'var(--primary-green)';
+                
+                setTimeout(function() {
+                    element.textContent = originalText;
+                    element.style.color = '';
+                }, 1000);
+            }).catch(function(err) {
+                console.error('Could not copy text: ', err);
+            });
+        });
+    });
 });
 </script>
 @endsection

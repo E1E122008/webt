@@ -489,29 +489,21 @@
                             <li><a class="dropdown-item" href="{{ route('pertanian.komoditas') }}">Komoditas</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            Informasi Desa
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('potensi') }}">Potensi Desa</a></li>
-                            <li><a class="dropdown-item" href="{{ route('program') }}">Program Desa</a></li>
-                            <li><a class="dropdown-item" href="{{ route('statistik') }}">Statistik</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('about') }}">Tentang</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('news') }}">Berita</a>
+                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('galeri') }}">Galeri</a>
                     </li>
-                   
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            Lainnya
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ route('about') }}">Tentang</a></li>
-                            <li><a class="dropdown-item" href="{{ route('contact') }}">Kontak</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('contact') }}">Kontak</a>
                     </li>
+                    
+                    
                 </ul>
             </div>
         </div>
@@ -592,6 +584,9 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <!-- Custom JS -->
     <script>

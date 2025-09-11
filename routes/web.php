@@ -114,6 +114,9 @@ Route::prefix('admin')->group(function () {
 
         // Sarana & Prasarana
         Route::get('/facilities', [FacilityController::class, 'index'])->name('admin.facilities');
-        Route::get('/facilities/{id}', [FacilityController::class, 'show'])->name('admin.facilities.show');           
+        Route::post('/facilities', [FacilityController::class, 'store'])->name('admin.facilities.store');
+        Route::get('/facilities/{id}', [FacilityController::class, 'show'])->name('admin.facilities.show');
+        Route::put('/facilities/{id}', [FacilityController::class, 'update'])->name('admin.facilities.update');
+        Route::delete('/facilities/{id}', [FacilityController::class, 'destroy'])->name('admin.facilities.destroy');
     });
 });
