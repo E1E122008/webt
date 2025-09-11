@@ -565,7 +565,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <h5>Kontak</h5>
-                                            <p><i class="fas fa-map-marker-alt me-2"></i>Desa Tetembomua, Kecamatan Lambuya</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i>Desa Tetembomua, Kecamatan Lambuya</p>
                     <p><i class="fas fa-phone me-2"></i>+62 812-3456-7890</p>
                     <p><i class="fas fa-envelope me-2"></i>info@desatetembomua.id</p>
                 </div>

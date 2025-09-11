@@ -396,13 +396,18 @@
                             <i class="fas fa-tachometer-alt"></i>
                             Dashboard
                         </a>
-                        <a class="nav-link {{ request()->is('admin/news*') ? 'active' : '' }}" href="{{ route('admin.news') }}">
-                            <i class="fas fa-newspaper"></i>
-                            Berita
+                        <a class="nav-link" data-bs-toggle="collapse" href="#mediaMenu" role="button" aria-expanded="false" aria-controls="mediaMenu">
+                            <i class="fas fa-database"></i> Media <i class="fas fa-chevron-down float-end"></i>
                         </a>
-                        <a class="nav-link {{ request()->is('admin/facilities*') ? 'active' : '' }}" href="{{ route('admin.facilities') }}">
-                            <i class="fas fa-building"></i> Sarana & Prasarana
-                        </a>
+                        <div class="collapse ms-3" id="mediaMenu">
+                            <a class="nav-link {{ request()->is('admin/news*') ? 'active' : '' }}" href="{{ route('admin.news') }}">
+                                <i class="fas fa-newspaper"></i>
+                                Berita
+                            </a>
+                            <a class="nav-link {{ request()->is('admin/gallery*') ? 'active' : '' }}" href="{{ route('admin.gallery') }}">
+                                <i class="fas fa-images"></i> Galeri
+                            </a>
+                        </div>
                         <!-- Data Master Dropdown -->
                         <a class="nav-link" data-bs-toggle="collapse" href="#dataMasterMenu" role="button" aria-expanded="false" aria-controls="dataMasterMenu">
                             <i class="fas fa-database"></i> Data Master <i class="fas fa-chevron-down float-end"></i>
@@ -414,37 +419,24 @@
                             <a class="nav-link {{ request()->is('admin/agricultural*') ? 'active' : '' }}" href="{{ route('admin.agricultural') }}">
                                 <i class="fas fa-seedling"></i> Data Pertanian
                             </a>
-                            <a class="nav-link {{ request()->is('admin/gallery*') ? 'active' : '' }}" href="{{ route('admin.gallery') }}">
-                                <i class="fas fa-images"></i> Galeri
-                            </a>
+                            
                             <a class="nav-link {{ request()->is('admin/structure*') ? 'active' : '' }}" href="{{ route('admin.structure') }}">
                                 <i class="fas fa-sitemap"></i> Struktur Organisasi
                             </a>
+                            <a class="nav-link {{ request()->is('admin/facilities*') ? 'active' : '' }}" href="{{ route('admin.facilities') }}">
+                                <i class="fas fa-building"></i> Sarana & Prasarana
+                            </a>
                         </div>
                         <!-- Manajemen Dropdown -->
-                        <a class="nav-link" data-bs-toggle="collapse" href="#manajemenMenu" role="button" aria-expanded="false" aria-controls="manajemenMenu">
-                            <i class="fas fa-user-cog"></i> Manajemen <i class="fas fa-chevron-down float-end"></i>
+                        
+                        <a class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}" href="{{ route('admin.users') }}">
+                            <i class="fas fa-user-cog"></i> Manajemen User
                         </a>
-                        <div class="collapse ms-3" id="manajemenMenu">
-                            <a class="nav-link {{ request()->is('admin/users*') ? 'active' : '' }}" href="{{ route('admin.users') }}">
-                                <i class="fas fa-user-cog"></i> Manajemen User
-                            </a>
-                            <a class="nav-link {{ request()->is('admin/settings*') ? 'active' : '' }}" href="{{ route('admin.settings') }}">
-                                <i class="fas fa-cog"></i> Pengaturan
-                            </a>
-                        </div>
+                        <a class="nav-link {{ request()->is('admin/settings*') ? 'active' : '' }}" href="{{ route('admin.settings') }}">
+                            <i class="fas fa-cog"></i> Pengaturan
+                        </a>
                         <!-- Lainnya Dropdown -->
-                        <a class="nav-link" data-bs-toggle="collapse" href="#lainnyaMenu" role="button" aria-expanded="false" aria-controls="lainnyaMenu">
-                            <i class="fas fa-ellipsis-h"></i> Lainnya <i class="fas fa-chevron-down float-end"></i>
-                        </a>
-                        <div class="collapse ms-3" id="lainnyaMenu">
-                            <a class="nav-link {{ request()->is('admin/organizational-structure*') ? 'active' : '' }}" href="{{ route('admin.organizational-structure.index') }}">
-                                <i class="fas fa-sitemap"></i> Struktur Organisasi (DB)
-                            </a>
-                            <a class="nav-link {{ request()->is('admin/gallery-db*') ? 'active' : '' }}" href="{{ route('admin.gallery-db.index') }}">
-                                <i class="fas fa-images"></i> Galeri (DB)
-                            </a>
-                        </div>
+                        
                         <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
                         <a class="nav-link" href="{{ route('home') }}">
                             <i class="fas fa-home"></i>

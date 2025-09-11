@@ -30,13 +30,38 @@
 </div>
 @endif
 
+<!-- Structure Categories Filter -->
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card fade-in">
+            <div class="card-header bg-transparent border-0">
+                <h5 class="mb-0">
+                    <i class="fas fa-filter me-2 text-primary"></i>
+                    Filter Berdasarkan Kategori
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-primary active" data-filter="all">Semua</button>
+                    <button type="button" class="btn btn-outline-success" data-filter="kepala_desa">Kepala Desa</button>
+                    <button type="button" class="btn btn-outline-info" data-filter="perangkat">Perangkat</button>
+                    <button type="button" class="btn btn-outline-warning" data-filter="bpd">BPD</button>
+                    <button type="button" class="btn btn-outline-secondary" data-filter="lpm">LPM</button>
+                    <button type="button" class="btn btn-outline-danger" data-filter="dusun">Dusun</button>
+                    <button type="button" class="btn btn-outline-dark" data-filter="rt">RT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card fade-in">
     <div class="card-body">
         <form action="{{ route('admin.structure.kades.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <h5 class="mb-3"><i class="fas fa-user-tie me-2 text-success"></i>Kepala Desa</h5>
-            <div class="row g-3 mb-4">
+            <div class="row g-3 mb-4 structure-item" data-role-type="kepala_desa">
                 <div class="col-md-3 text-center">
                     <div class="border rounded p-2">
                         <span role="button" class="open-image" data-src="{{ $struktur['kades']['photo'] ?? asset('FOTO/LOGO.png') }}">
@@ -80,7 +105,7 @@
             @else
             <div class="row g-3">
                 @foreach($list as $item)
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 structure-item" data-role-type="{{ $cat }}">
                     <div class="p-3 border rounded h-100 d-flex">
                         <div class="me-3" style="width:64px;height:64px;flex:0 0 64px;">
                             <span role="button" class="open-image" data-src="{{ $item['photo'] ?? asset('FOTO/LOGO-removebg-preview.png') }}">
@@ -251,9 +276,52 @@
     </div>
 </div>
 
+<style>
+.structure-item {
+    transition: all 0.3s ease;
+}
+
+.structure-item:hover {
+    transform: translateY(-5px);
+}
+
+.btn-group .btn {
+    border-radius: 20px;
+    margin-right: 5px;
+}
+
+.btn-group .btn.active {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white;
+}
+</style>
+
 @section('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Filter functionality
+    const filterBtns = document.querySelectorAll('[data-filter]');
+    const structureItems = document.querySelectorAll('.structure-item');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            const filter = this.getAttribute('data-filter');
+            
+            structureItems.forEach(item => {
+                if (filter === 'all' || item.getAttribute('data-role-type') === filter) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
     const addRole = document.getElementById('add_role_type');
     const addRoleWrap = document.getElementById('add_role_text_wrap');
     const addCategory = document.querySelector('#addEntryForm select[name="category"]');
@@ -368,6 +436,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     form.submit();
                 }
             });
+        });
+    });
+
+    // Add click event to all open-image elements
+    document.querySelectorAll('.open-image').forEach(function(element) {
+        element.addEventListener('click', function() {
+            const src = this.getAttribute('data-src');
+            if (src) {
+                // Use the existing adminImagePreviewModal from gallery
+                const modal = document.getElementById('adminImagePreviewModal');
+                const modalImg = document.getElementById('adminImagePreviewModalImg');
+                if (modal && modalImg) {
+                    modalImg.src = src;
+                    new bootstrap.Modal(modal).show();
+                }
+            }
         });
     });
 });
