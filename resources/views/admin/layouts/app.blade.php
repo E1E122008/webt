@@ -397,7 +397,7 @@
                             Dashboard
                         </a>
                         <a class="nav-link" data-bs-toggle="collapse" href="#mediaMenu" role="button" aria-expanded="false" aria-controls="mediaMenu">
-                            <i class="fas fa-database"></i> Media <i class="fas fa-chevron-down float-end"></i>
+                            <i class="fas fa-images"></i> Media <i class="fas fa-chevron-down float-end"></i>
                         </a>
                         <div class="collapse ms-3" id="mediaMenu">
                             <a class="nav-link {{ request()->is('admin/news*') ? 'active' : '' }}" href="{{ route('admin.news') }}">
