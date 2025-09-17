@@ -493,9 +493,8 @@
                         <a class="nav-link" href="{{ route('about') }}">Tentang</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('news') }}">Berita</a>
+                        <a class="nav-link" href="{{ route('news') }}">Informasi Terkini</a>
                     </li>
-                    
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('galeri') }}">Galeri</a>
                     </li>
@@ -559,6 +558,7 @@
                     <ul class="list-unstyled">
                         <li><a href="{{ route('galeri') }}">Galeri</a></li>
                         <li><a href="{{ route('news') }}">Berita</a></li>
+                        <li><a href="{{ route('announcements') }}">Pengumuman</a></li>
                         <li><a href="{{ route('about') }}">Tentang</a></li>
                         <li><a href="{{ route('contact') }}">Kontak</a></li>
                     </ul>

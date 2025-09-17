@@ -62,34 +62,34 @@
 
             <h5 class="mb-3"><i class="fas fa-user-tie me-2 text-success"></i>Kepala Desa</h5>
             <div class="row g-3 mb-4 structure-item" data-role-type="kepala_desa">
-                <div class="col-md-3 text-center">
-                    <div class="border rounded p-2">
-                        <span role="button" class="open-image" data-src="{{ $struktur['kades']['photo'] ?? asset('FOTO/LOGO.png') }}">
-                            <img src="{{ $struktur['kades']['photo'] ?? asset('FOTO/LOGO.png') }}" alt="Kepala Desa" class="img-fluid" style="max-height:160px; object-fit:cover;">
-                        </span>
+                    <div class="col-md-3 text-center">
+                        <div class="border rounded p-2">
+                            <span role="button" class="open-image" data-src="{{ $struktur['kades']['photo'] ?? asset('FOTO/LOGO.png') }}">
+                                <img src="{{ $struktur['kades']['photo'] ?? asset('FOTO/LOGO.png') }}" alt="Kepala Desa" class="img-fluid" style="max-height:160px; object-fit:cover;">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="mb-3">
+                            <label class="form-label">Nama</label>
+                            <input type="text" name="kades_name" class="form-control" value="{{ $struktur['kades']['name'] ?? '' }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Informasi</label>
+                            <input type="text" name="kades_info" class="form-control" value="{{ $struktur['kades']['info'] ?? '' }}" placeholder="Misal: Masa Jabatan 2024 - Sekarang">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Foto</label>
+                            <input type="file" name="kades_photo" class="form-control" accept="image/*">
+                            <small class="text-muted">Format JPG/PNG, disarankan rasio 1:1</small>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-9">
-                    <div class="mb-3">
-                        <label class="form-label">Nama</label>
-                        <input type="text" name="kades_name" class="form-control" value="{{ $struktur['kades']['name'] ?? '' }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Informasi</label>
-                        <input type="text" name="kades_info" class="form-control" value="{{ $struktur['kades']['info'] ?? '' }}" placeholder="Misal: Masa Jabatan 2024 - Sekarang">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Foto</label>
-                        <input type="file" name="kades_photo" class="form-control" accept="image/*">
-                        <small class="text-muted">Format JPG/PNG, disarankan rasio 1:1</small>
-                    </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success"><i class="fas fa-save me-2"></i>Simpan Kepala Desa</button>
                 </div>
-            </div>
-            <div class="text-end">
-                <button type="submit" class="btn btn-success"><i class="fas fa-save me-2"></i>Simpan Kepala Desa</button>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
 </div>
 
 <div class="card fade-in mb-4">
@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-
+    
     // Add click event to all open-image elements
     document.querySelectorAll('.open-image').forEach(function(element) {
         element.addEventListener('click', function() {

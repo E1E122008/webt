@@ -27,6 +27,30 @@
 </div>
 @endif
 
+<!-- News Categories Filter -->
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card fade-in">
+            <div class="card-header bg-transparent border-0">
+                <h5 class="mb-0">
+                    <i class="fas fa-filter me-2 text-primary"></i>
+                    Filter Berdasarkan Kategori
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-primary active" data-filter="all">Semua</button>
+                    <button type="button" class="btn btn-outline-success" data-filter="umum">Umum</button>
+                    <button type="button" class="btn btn-outline-info" data-filter="pertanian">Pertanian</button>
+                    <button type="button" class="btn btn-outline-warning" data-filter="sosial">Sosial</button>
+                    <button type="button" class="btn btn-outline-secondary" data-filter="ekonomi">Ekonomi</button>
+                    <button type="button" class="btn btn-outline-danger" data-filter="pemerintahan">Pemerintahan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- News Table -->
 <div class="card fade-in">
     <div class="card-header bg-transparent border-0">
@@ -51,7 +75,7 @@
                 </thead>
                 <tbody>
                     @foreach($news as $index => $item)
-                    <tr>
+                    <tr class="news-item" data-category="{{ $item->category }}">
                         <td>{{ $index + 1 }}</td>
                         <td>
                             <span role="button" class="open-image" data-src="{{ $item->image_url }}">
@@ -150,6 +174,47 @@
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Filter functionality
+    const filterBtns = document.querySelectorAll('[data-filter]');
+    const newsItems = document.querySelectorAll('.news-item');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            const filter = this.getAttribute('data-filter');
+            
+            newsItems.forEach(item => {
+                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    item.style.display = 'table-row';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Add click event to all open-image elements
+    document.querySelectorAll('.open-image').forEach(function(element) {
+        element.addEventListener('click', function() {
+            const src = this.getAttribute('data-src');
+            if (src) {
+                // Use the existing adminImagePreviewModal from gallery
+                const modal = document.getElementById('adminImagePreviewModal');
+                const modalImg = document.getElementById('adminImagePreviewModalImg');
+                if (modal && modalImg) {
+                    modalImg.src = src;
+                    new bootstrap.Modal(modal).show();
+                }
+            }
+        });
+    });
+});
+
 function deleteNews(id) {
     Swal.fire({
         title: 'Konfirmasi Hapus',
@@ -313,5 +378,21 @@ function deleteNews(id) {
 /* SweetAlert Loading */
 .swal2-loader {
     border-color: var(--primary-green) transparent var(--primary-green) transparent !important;
+}
+
+/* Filter Styles */
+.news-item {
+    transition: all 0.3s ease;
+}
+
+.btn-group .btn {
+    border-radius: 20px;
+    margin-right: 5px;
+}
+
+.btn-group .btn.active {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white;
 }
 </style>

@@ -404,6 +404,10 @@
                                 <i class="fas fa-newspaper"></i>
                                 Berita
                             </a>
+                            <a class="nav-link {{ request()->is('admin/announcements*') ? 'active' : '' }}" href="{{ route('admin.announcements.index') }}">
+                                <i class="fas fa-bullhorn"></i>
+                                Pengumuman
+                            </a>
                             <a class="nav-link {{ request()->is('admin/gallery*') ? 'active' : '' }}" href="{{ route('admin.gallery') }}">
                                 <i class="fas fa-images"></i> Galeri
                             </a>

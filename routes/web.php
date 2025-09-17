@@ -39,6 +39,8 @@ Route::prefix('pertanian')->group(function () {
 
 // Lain-lain
 Route::get('/news', [HomeController::class, 'news'])->name('news');
+Route::get('/news/{slug}', [HomeController::class, 'newsDetail'])->name('news.detail');
+Route::get('/announcements', [HomeController::class, 'announcements'])->name('announcements');
 Route::get('/potensi', [HomeController::class, 'potensi'])->name('potensi');
 Route::get('/program', [HomeController::class, 'program'])->name('program');
 Route::get('/galeri', [HomeController::class, 'galeri'])->name('galeri');
@@ -67,6 +69,10 @@ Route::prefix('admin')->group(function () {
         Route::delete('/news/{news}', [NewsController::class, 'destroy'])->name('admin.news.destroy');
         Route::post('/news/{news}/toggle-status', [NewsController::class, 'toggleStatus'])->name('admin.news.toggle-status');
         Route::get('/news/show/{news}', [NewsController::class, 'show'])->name('admin.news.show');
+        
+        // Announcements
+        Route::resource('announcements', \App\Http\Controllers\Admin\AnnouncementController::class, ['as' => 'admin']);
+        Route::post('/announcements/{announcement}/toggle-status', [\App\Http\Controllers\Admin\AnnouncementController::class, 'toggleStatus'])->name('admin.announcements.toggle-status');
 
 
          // Population Data

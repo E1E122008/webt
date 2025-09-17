@@ -158,6 +158,58 @@
                 </div>
             </div>
         </div>
+        <!-- Kepemimpinan Saat Ini -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="card fade-in">
+                    <div class="card-body p-4">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-user-tie fa-3x text-success mb-3"></i>
+                            <h2 class="text-success fw-bold">KEPEMIMPINAN SAAT INI</h2>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="leadership-card">
+                                    <div class="leadership-avatar">
+                                        <span role="button" class="open-image" data-src="{{ isset($struktur['kades']['photo']) && $struktur['kades']['photo'] ? $struktur['kades']['photo'] : asset('FOTO/DSC_0596.JPG') }}">
+                                            <img src="{{ isset($struktur['kades']['photo']) && $struktur['kades']['photo'] ? $struktur['kades']['photo'] : asset('FOTO/DSC_0596.JPG') }}" alt="Kepala Desa" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+                                        </span>
+                                    </div>
+                                    <div class="leadership-info">
+                                        <h4 class="text-primary">{{ $struktur['kades']['name'] ?? 'Abdullah, SP' }}</h4>
+                                        <p class="text-muted">Kepala Desa</p>
+                                        <p><strong>Masa Jabatan:</strong> {{ $struktur['kades']['info'] ?? '2024 - Sekarang' }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="leadership-card">
+                                    <div class="leadership-avatar">
+                                        @php
+                                            $sekretaris = collect($struktur['entries']['perangkat'] ?? [])->firstWhere('role_type', 'sekretaris') ?? 
+                                                        collect($struktur['entries']['perangkat'] ?? [])->firstWhere('role_text', 'Sekretaris Desa');
+                                        @endphp
+                                        @if($sekretaris && !empty($sekretaris['photo']))
+                                            <span role="button" class="open-image" data-src="{{ $sekretaris['photo'] }}">
+                                                <img src="{{ $sekretaris['photo'] }}" alt="Sekretaris Desa" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+                                            </span>
+                                        @else
+                                            <i class="fas fa-user fa-4x text-muted"></i>
+                                        @endif
+                                    </div>
+                                    <div class="leadership-info">
+                                        <h4 class="text-success">{{ $sekretaris['name'] ?? 'Sekretaris Desa' }}</h4>
+                                        <p class="text-muted">Sekretaris Desa</p>
+                                        <p><strong>Periode:</strong> {{ $sekretaris['info'] ?? '2024 - Sekarang' }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Visi Desa -->
         <div class="row mb-5">
@@ -259,58 +311,7 @@
             </div>
         </div>
 
-        <!-- Kepemimpinan Saat Ini -->
-        <div class="row mb-5">
-            <div class="col-12">
-                <div class="card fade-in">
-                    <div class="card-body p-4">
-                        <div class="text-center mb-4">
-                            <i class="fas fa-user-tie fa-3x text-success mb-3"></i>
-                            <h2 class="text-success fw-bold">KEPEMIMPINAN SAAT INI</h2>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-                                <div class="leadership-card">
-                                    <div class="leadership-avatar">
-                                        <span role="button" class="open-image" data-src="{{ isset($struktur['kades']['photo']) && $struktur['kades']['photo'] ? $struktur['kades']['photo'] : asset('FOTO/DSC_0596.JPG') }}">
-                                            <img src="{{ isset($struktur['kades']['photo']) && $struktur['kades']['photo'] ? $struktur['kades']['photo'] : asset('FOTO/DSC_0596.JPG') }}" alt="Kepala Desa" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
-                                        </span>
-                                    </div>
-                                    <div class="leadership-info">
-                                        <h4 class="text-primary">{{ $struktur['kades']['name'] ?? 'Abdullah, SP' }}</h4>
-                                        <p class="text-muted">Kepala Desa</p>
-                                        <p><strong>Masa Jabatan:</strong> {{ $struktur['kades']['info'] ?? '2024 - Sekarang' }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-4">
-                                <div class="leadership-card">
-                                    <div class="leadership-avatar">
-                                        @php
-                                            $sekretaris = collect($struktur['entries']['perangkat'] ?? [])->firstWhere('role_type', 'sekretaris') ?? 
-                                                        collect($struktur['entries']['perangkat'] ?? [])->firstWhere('role_text', 'Sekretaris Desa');
-                                        @endphp
-                                        @if($sekretaris && !empty($sekretaris['photo']))
-                                            <span role="button" class="open-image" data-src="{{ $sekretaris['photo'] }}">
-                                                <img src="{{ $sekretaris['photo'] }}" alt="Sekretaris Desa" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
-                                            </span>
-                                        @else
-                                            <i class="fas fa-user fa-4x text-muted"></i>
-                                        @endif
-                                    </div>
-                                    <div class="leadership-info">
-                                        <h4 class="text-success">{{ $sekretaris['name'] ?? 'Sekretaris Desa' }}</h4>
-                                        <p class="text-muted">Sekretaris Desa</p>
-                                        <p><strong>Periode:</strong> {{ $sekretaris['info'] ?? '2024 - Sekarang' }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
         <!-- Program SDGs Desa -->
         <div class="row mb-5">

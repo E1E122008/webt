@@ -9,7 +9,7 @@
         <div class="row align-items-center">
             <div class="col-lg-8 mx-auto text-center">
                 <div class="hero-content">
-                    <h1>Berita & Informasi Terkini</h1>
+                    <h1>Berita & Pengumuman Terkini</h1>
                     <p>Dapatkan informasi terbaru seputar kegiatan, program, dan perkembangan Desa Tetembomua</p>
                 </div>
             </div>
@@ -25,24 +25,38 @@
             <p>Informasi terkini seputar kegiatan dan program desa</p>
         </div>
         
+        <!-- Search and Filter -->
+        <div class="row mb-4">
+            <div class="col-lg-12">
+                <form method="GET" action="{{ route('news') }}" class="d-flex">
+                    <input type="text" name="search" class="form-control me-2" placeholder="Cari berita..." value="{{ request('search') }}">
+                    <button type="submit" class="btn btn-outline-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            
+        </div>
+        
         <!-- Featured News -->
+        @if($featuredNews)
         <div class="row mb-5">
             <div class="col-lg-8">
                 <div class="card featured-news">
-                    <span role="button" class="open-image" data-src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
-                        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                             class="card-img-top" alt="Kegiatan Desa">
+                    <span role="button" class="open-image" data-src="{{ $featuredNews->image_url }}">
+                        <img src="{{ $featuredNews->image_url }}" 
+                             class="card-img-top" alt="{{ $featuredNews->title }}">
                     </span>
                     <div class="card-body">
                         <div class="news-meta mb-3">
-                            <span class="badge bg-primary">Utama</span>
+                            <span class="badge bg-primary">{{ ucfirst($featuredNews->category) }}</span>
                             <small class="text-muted ms-3">
-                                <i class="fas fa-calendar me-1"></i>15 Desember 2024
+                                <i class="fas fa-calendar me-1"></i>{{ $featuredNews->published_at->format('d F Y') }}
                             </small>
                         </div>
-                        <h3 class="card-title">Pelaksanaan Program Pemberdayaan Masyarakat Desa</h3>
-                        <p class="card-text">Program pemberdayaan masyarakat desa telah dilaksanakan dengan sukses. Kegiatan ini melibatkan seluruh elemen masyarakat desa dalam rangka meningkatkan kesejahteraan dan kemandirian desa.</p>
-                        <a href="#" class="btn btn-primary">Baca Selengkapnya</a>
+                        <h3 class="card-title">{{ $featuredNews->title }}</h3>
+                        <p class="card-text">{{ $featuredNews->excerpt }}</p>
+                        <a href="{{ route('news.detail', $featuredNews->slug) }}" class="btn btn-primary">Baca Selengkapnya</a>
                     </div>
                 </div>
             </div>
@@ -54,164 +68,83 @@
                             Pengumuman Terbaru
                         </h5>
                         <div class="announcement-list">
+                            @forelse($announcements as $announcement)
                             <div class="announcement-item mb-3">
-                                <h6>Rapat Koordinasi Desa</h6>
-                                <p class="text-muted mb-1">Jumat, 20 Desember 2024</p>
-                                <small class="text-muted">Pukul 19:00 WITA di Balai Desa</small>
+                                <div>
+                                    <h6>{{ $announcement->title }}</h6>
+                                    <p class="text-muted mb-1">{{ $announcement->formatted_date }}</p>
+                                    @if($announcement->formatted_time)
+                                        <small class="text-muted">Pukul {{ $announcement->formatted_time }} WITA</small>
+                                    @endif
+                                    @if($announcement->location)
+                                        <br><small class="text-muted">Lokasi: {{ $announcement->location }}</small>
+                                    @endif
+                                    @if($announcement->description)
+                                        <br><small class="text-muted">{{ Str::limit($announcement->description, 80) }}</small>
+                                    @endif
+                                </div>
                             </div>
-                            <div class="announcement-item mb-3">
-                                <h6>Pendaftaran Bantuan UMKM</h6>
-                                <p class="text-muted mb-1">Deadline: 25 Desember 2024</p>
-                                <small class="text-muted">Syarat dan ketentuan berlaku</small>
+                            @empty
+                            <div class="text-center py-3">
+                                <i class="fas fa-bullhorn fa-2x text-muted mb-2"></i>
+                                <p class="text-muted mb-0">Tidak ada pengumuman</p>
                             </div>
-                            <div class="announcement-item">
-                                <h6>Jadwal Posyandu</h6>
-                                <p class="text-muted mb-1">Setiap Senin minggu ke-2</p>
-                                <small class="text-muted">Pukul 08:00 - 12:00 WITA</small>
+                            @endforelse
+                            
+                            <!-- View All Button -->
+                            <div class="text-center mt-3">
+                                <a href="{{ route('announcements') }}" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-list me-1"></i>Lihat Semua Pengumuman
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        @endif
 
         <!-- News Grid -->
         <div class="row">
+            @forelse($news as $item)
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card h-100">
-                    <span role="button" class="open-image" data-src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80">
-                        <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                             class="card-img-top" alt="Pertanian">
+                    <span role="button" class="open-image" data-src="{{ $item->image_url }}">
+                        <img src="{{ $item->image_url }}" 
+                             class="card-img-top" alt="{{ $item->title }}">
                     </span>
                     <div class="card-body">
                         <div class="news-meta mb-2">
-                            <span class="badge bg-success">Pertanian</span>
+                            <span class="badge bg-{{ $item->category == 'umum' ? 'primary' : ($item->category == 'pertanian' ? 'success' : ($item->category == 'sosial' ? 'info' : ($item->category == 'ekonomi' ? 'warning' : 'secondary'))) }}">
+                                {{ ucfirst($item->category) }}
+                            </span>
                             <small class="text-muted ms-2">
-                                <i class="fas fa-calendar me-1"></i>12 Desember 2024
+                                <i class="fas fa-calendar me-1"></i>{{ $item->published_at->format('d F Y') }}
                             </small>
                         </div>
-                        <h5 class="card-title">Pelatihan Teknologi Pertanian Modern</h5>
-                        <p class="card-text">Kegiatan pelatihan teknologi pertanian modern telah diselenggarakan untuk meningkatkan produktivitas petani desa.</p>
-                        <a href="#" class="btn btn-outline-primary btn-sm">Baca Selengkapnya</a>
+                        <h5 class="card-title">{{ $item->title }}</h5>
+                        <p class="card-text">{{ $item->excerpt }}</p>
+                        <a href="{{ route('news.detail', $item->slug) }}" class="btn btn-outline-primary btn-sm">Baca Selengkapnya</a>
                     </div>
                 </div>
             </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <span role="button" class="open-image" data-src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80">
-                        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                             class="card-img-top" alt="Infrastruktur">
-                    </span>
-                    <div class="card-body">
-                        <div class="news-meta mb-2">
-                            <span class="badge bg-info">Infrastruktur</span>
-                            <small class="text-muted ms-2">
-                                <i class="fas fa-calendar me-1"></i>10 Desember 2024
-                            </small>
-                        </div>
-                        <h5 class="card-title">Pembangunan Jalan Desa Selesai</h5>
-                        <p class="card-text">Proyek pembangunan jalan desa sepanjang 2 kilometer telah selesai dan siap digunakan oleh masyarakat.</p>
-                        <a href="#" class="btn btn-outline-primary btn-sm">Baca Selengkapnya</a>
-                    </div>
+            @empty
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">Tidak ada berita ditemukan</h4>
+                    <p class="text-muted">Coba gunakan kata kunci lain atau pilih kategori yang berbeda.</p>
                 </div>
             </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <span role="button" class="open-image" data-src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80">
-                        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                             class="card-img-top" alt="Pendidikan">
-                    </span>
-                    <div class="card-body">
-                        <div class="news-meta mb-2">
-                            <span class="badge bg-warning">Pendidikan</span>
-                            <small class="text-muted ms-2">
-                                <i class="fas fa-calendar me-1"></i>8 Desember 2024
-                            </small>
-                        </div>
-                        <h5 class="card-title">Program Beasiswa untuk Anak Desa</h5>
-                        <p class="card-text">Program beasiswa untuk anak-anak desa yang berprestasi telah dibuka dengan kuota 20 penerima.</p>
-                        <a href="#" class="btn btn-outline-primary btn-sm">Baca Selengkapnya</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <span role="button" class="open-image" data-src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80">
-                        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                             class="card-img-top" alt="Kesehatan">
-                    </span>
-                    <div class="card-body">
-                        <div class="news-meta mb-2">
-                            <span class="badge bg-danger">Kesehatan</span>
-                            <small class="text-muted ms-2">
-                                <i class="fas fa-calendar me-1"></i>5 Desember 2024
-                            </small>
-                        </div>
-                        <h5 class="card-title">Kampanye Vaksinasi COVID-19</h5>
-                        <p class="card-text">Kampanye vaksinasi COVID-19 untuk masyarakat desa telah dilaksanakan dengan target 100% vaksinasi.</p>
-                        <a href="#" class="btn btn-outline-primary btn-sm">Baca Selengkapnya</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <span role="button" class="open-image" data-src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80">
-                        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                             class="card-img-top" alt="Ekonomi">
-                    </span>
-                    <div class="card-body">
-                        <div class="news-meta mb-2">
-                            <span class="badge bg-secondary">Ekonomi</span>
-                            <small class="text-muted ms-2">
-                                <i class="fas fa-calendar me-1"></i>3 Desember 2024
-                            </small>
-                        </div>
-                        <h5 class="card-title">Peluncuran Program UMKM Desa</h5>
-                        <p class="card-text">Program pengembangan UMKM desa telah diluncurkan dengan dukungan dana dari pemerintah pusat.</p>
-                        <a href="#" class="btn btn-outline-primary btn-sm">Baca Selengkapnya</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100">
-                    <span role="button" class="open-image" data-src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80">
-                        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
-                             class="card-img-top" alt="Budaya">
-                    </span>
-                    <div class="card-body">
-                        <div class="news-meta mb-2">
-                            <span class="badge bg-dark">Budaya</span>
-                            <small class="text-muted ms-2">
-                                <i class="fas fa-calendar me-1"></i>1 Desember 2024
-                            </small>
-                        </div>
-                        <h5 class="card-title">Festival Budaya Desa Tetembomua</h5>
-                        <p class="card-text">Festival budaya desa akan diselenggarakan untuk melestarikan adat istiadat dan budaya lokal.</p>
-                        <a href="#" class="btn btn-outline-primary btn-sm">Baca Selengkapnya</a>
-                    </div>
-                </div>
-            </div>
+            @endforelse
         </div>
 
         <!-- Pagination -->
+        @if($news->hasPages())
         <nav aria-label="News pagination" class="mt-5">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
-                </li>
-            </ul>
+            {{ $news->appends(request()->query())->links() }}
         </nav>
+        @endif
     </div>
 </section>
 
