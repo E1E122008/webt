@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="hero-section">
+<section class="hero-section" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/FOTO/sawh.jpeg') center/cover;">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
@@ -25,8 +25,8 @@
             <div class="col-lg-6">
                 <div class="text-center">
                     <div class="hero-image-container">
-                        <span role="button" class="open-image" data-src="{{ asset('FOTO/upacara.jpeg') }}">
-                            <img src="{{ asset('FOTO/upacara.jpeg') }}" 
+                        <span role="button" class="open-image" data-src="{{ asset('FOTO/LOGO-removebg-preview.png') }}">
+                            <img src="{{ asset('FOTO/LOGO-removebg-preview.png') }}" 
                                  alt="{{ $siteSettings['village_name'] ?? 'Desa Tetembomua' }}" class="img-fluid hero-image">
                         </span>
                         <div class="hero-image-overlay"></div>
@@ -87,9 +87,9 @@
         <div class="row align-items-center">
             <div class="col-lg-6 mb-4">
                 <div class="about-image-container">
-                    <span role="button" class="open-image" data-src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80">
-                        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?ixbl=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                             alt="{{ $siteSettings['village_name'] ?? 'Desa Tetembomua' }}" class="img-fluid about-image">
+                    <span role="button" class="open-image" data-src="{{ asset('FOTO/bend.jpg') }}">
+                        <img src="{{ asset('FOTO/bend.jpg') }}" 
+                             alt="{{ $siteSettings['village_name'] ?? 'Desa Tetembomua' }}" class="img about-image">
                     </span>
                     <div class="about-image-overlay"></div>
                 </div>

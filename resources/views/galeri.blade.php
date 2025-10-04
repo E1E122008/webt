@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="hero-section" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/FOTO/devyle.jpeg') center/cover;">
+<section class="hero-section" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/FOTO/upacara.jpeg') center/cover;">
     <div class="container">
         <div class="row align-items-center min-vh-50">
             <div class="col-lg-8 mx-auto text-center">
@@ -15,22 +15,7 @@
     </div>
 </section>
 
-<!-- Filter Buttons -->
-<section class="py-4 bg-light">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">Semua</button>
-                    <button class="filter-btn" data-filter="kegiatan">Kegiatan</button>
-                    <button class="filter-btn" data-filter="pembangunan">Pembangunan</button>
-                    <button class="filter-btn" data-filter="potensi">Potensi</button>
-                    <button class="filter-btn" data-filter="alam">Alam</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 @php
     $images = [];
@@ -48,6 +33,7 @@
         <div class="row">
             <div class="col-12 text-center mb-4">
                 <h2 class="section-title">Foto Kegiatan</h2>
+                <p class="text-muted">Foto kegiatan Desa Tetembomua</p>
                 <div class="title-underline"></div>
             </div>
         </div>
@@ -87,7 +73,7 @@
             <div class="col-lg-12 text-center mb-5">
                 <h2 class="section-title">Video Dokumentasi</h2>
                 <div class="title-underline"></div>
-                <p class="text-muted">Video dokumentasi kegiatan dan potensi desa</p>
+                <p class="text-muted">Video dokumentasi kegiatan Desa Tetembomua</p>
             </div>
         </div>
         <div class="row g-4">
@@ -102,8 +88,8 @@
                             Browser Anda tidak mendukung tag video.
                         </video>
                         <div class="p-3">
-                            <h5 class="mb-1">{{ $item['title'] ?? ($item['name'] ?? 'Video') }}</h5>
-                            <small class="text-muted">{{ $item['description'] ?? 'Video dokumentasi desa' }}</small>
+                            <h5 class="text-muted">{{ $item['description'] ?? 'Video dokumentasi desa' }}</h5>
+                            <span class="gallery-date">{{ !empty($item['image_date']) ? date('d F Y', strtotime($item['image_date'])) : date('d F Y') }}</span>
                         </div>
                     </div>
                 </div>

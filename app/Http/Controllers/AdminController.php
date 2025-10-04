@@ -10,7 +10,51 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard');
+        // Get real data from database
+        $stats = [
+            'total_users' => \App\Models\User::count(),
+            'total_news' => \App\Models\News::count(),
+            'published_news' => \App\Models\News::where('status', 'published')->count(),
+            'draft_news' => \App\Models\News::where('status', 'draft')->count(),
+            'total_announcements' => \App\Models\Announcement::count(),
+            'active_announcements' => \App\Models\Announcement::where('is_active', true)->count(),
+        ];
+
+        // Population statistics
+        $populationStats = [
+            'total_population' => \App\Models\Population::count(),
+            'total_kk' => \App\Models\Population::distinct('no_kk')->count('no_kk'),
+            'male_count' => \App\Models\Population::where('jenis_kelamin', 'L')->count(),
+            'female_count' => \App\Models\Population::where('jenis_kelamin', 'P')->count(),
+            'farmer_count' => \App\Models\Population::where('pekerjaan', 'like', '%petani%')->count(),
+            'rt_count' => \App\Models\Population::distinct('dusun_id')->count('dusun_id'),
+        ];
+
+        // Latest news
+        $latestNews = \App\Models\News::with('author')
+            ->latest('published_at')
+            ->take(4)
+            ->get();
+
+        // Latest announcements
+        $latestAnnouncements = \App\Models\Announcement::where('is_active', true)
+            ->latest('announcement_date')
+            ->take(3)
+            ->get();
+
+        // Agricultural data summary
+        $agriculturalStats = [
+            'total_commodities' => \App\Models\AgriculturalCommodity::count(),
+            'total_farmers' => \App\Models\Population::where('pekerjaan', 'like', '%petani%')->count(),
+        ];
+
+        return view('admin.dashboard', compact(
+            'stats', 
+            'populationStats', 
+            'latestNews', 
+            'latestAnnouncements', 
+            'agriculturalStats'
+        ));
     }
 
     public function news()
