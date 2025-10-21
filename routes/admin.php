@@ -20,6 +20,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Population Data Management
     Route::resource('population', PopulationController::class);
+    Route::post('population/import-excel', [PopulationController::class, 'importExcel'])->name('population.import-excel');
+    Route::post('population/import-csv', [PopulationController::class, 'importCsv'])->name('population.import-csv');
+    
+    // Alternative route names for compatibility
+    Route::post('population/import', [PopulationController::class, 'importExcel'])->name('population.import');
 
     // Agricultural Data Management
     Route::resource('agricultural', AgriculturalController::class);

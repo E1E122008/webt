@@ -13,10 +13,10 @@ class Population extends Model
         'status_perkawinan', 'suku', 'pendidikan_terakhir',
         'mata_pencaharian', 'pekerjaan_tambahan',
         'luas_lahan_pertanian', 'komoditas_utama', 'komoditas_buah_sayur',
-        'bantuan', 'dusun',
+        'bantuan', 'dusun_id',
         // Tambahan kolom kendaraan/ternak jika ada di Excel:
         'mobil', 'motor', 'sepeda', 'sapi', 'kambing', 'ayam',
         // Kolom status rumah jika ada
-        'status_kepemilikan_rumah', 'status_dinding', 'status_atap', 'status_lantai',
+        'status_kepemilikan_rumah', 'status_dinding', 'status_atap', 'penggunaan_listrik','mck',
     ];
 }

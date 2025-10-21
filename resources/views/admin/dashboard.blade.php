@@ -28,10 +28,10 @@
     <div class="col-lg-3 col-md-6 mb-3">
         <div class="card stat-card slide-in h-100">
             <div class="card-body d-flex justify-content-between align-items-center">
-                <div>
+                    <div>
                     <h3 class="mb-1 text-primary">{{ number_format($populationStats['total_population']) }}</h3>
                     <small class="text-muted">Total Penduduk</small>
-                </div>
+                    </div>
                 <div class="stat-icon">
                     <i class="fas fa-users text-primary"></i>
                 </div>
@@ -41,10 +41,10 @@
     <div class="col-lg-3 col-md-6 mb-3">
         <div class="card stat-card success slide-in h-100">
             <div class="card-body d-flex justify-content-between align-items-center">
-                <div>
+                    <div>
                     <h3 class="mb-1 text-success">{{ number_format($populationStats['total_kk']) }}</h3>
                     <small class="text-muted">Total KK</small>
-                </div>
+                    </div>
                 <div class="stat-icon">
                     <i class="fas fa-home text-success"></i>
                 </div>
@@ -54,10 +54,10 @@
     <div class="col-lg-3 col-md-6 mb-3">
         <div class="card stat-card warning slide-in h-100">
             <div class="card-body d-flex justify-content-between align-items-center">
-                <div>
+                    <div>
                     <h3 class="mb-1 text-warning">{{ number_format($populationStats['farmer_count']) }}</h3>
                     <small class="text-muted">Petani</small>
-                </div>
+                    </div>
                 <div class="stat-icon">
                     <i class="fas fa-seedling text-warning"></i>
                 </div>
@@ -67,10 +67,10 @@
     <div class="col-lg-3 col-md-6 mb-3">
         <div class="card stat-card info slide-in h-100">
             <div class="card-body d-flex justify-content-between align-items-center">
-                <div>
+                    <div>
                     <h3 class="mb-1 text-info">{{ number_format($populationStats['rt_count']) }}</h3>
                     <small class="text-muted">RT</small>
-                </div>
+                    </div>
                 <div class="stat-icon">
                     <i class="fas fa-map-marker-alt text-info"></i>
                 </div>
@@ -85,10 +85,10 @@
         <div class="card fade-in h-100">
             <div class="card-header bg-transparent border-0 pb-0">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">
-                        <i class="fas fa-newspaper me-2 text-primary"></i>
-                        Berita Terbaru
-                    </h5>
+                <h5 class="mb-0">
+                    <i class="fas fa-newspaper me-2 text-primary"></i>
+                    Berita Terbaru
+                </h5>
                     <a href="{{ route('admin.news') }}" class="btn btn-sm btn-outline-primary">
                         Lihat Semua
                     </a>
@@ -124,10 +124,10 @@
         <div class="card fade-in h-100">
             <div class="card-header bg-transparent border-0 pb-0">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">
-                        <i class="fas fa-bullhorn me-2 text-primary"></i>
-                        Pengumuman Terbaru
-                    </h5>
+                <h5 class="mb-0">
+                    <i class="fas fa-bullhorn me-2 text-primary"></i>
+                    Pengumuman Terbaru
+                </h5>
                     <a href="{{ route('admin.announcements.index') }}" class="btn btn-sm btn-outline-primary">
                         Lihat Semua
                     </a>
@@ -183,13 +183,13 @@
                     <div class="col-lg-3 col-md-6 text-center mb-3">
                         <div class="p-3 border rounded">
                             <h6 class="text-danger fw-bold mb-1">{{ number_format($populationStats['female_count']) }}</h6>
-                            <small class="text-muted">Perempuan</small>
+                        <small class="text-muted">Perempuan</small>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 text-center mb-3">
                         <div class="p-3 border rounded">
                             <h6 class="text-success fw-bold mb-1">10.54 km²</h6>
-                            <small class="text-muted">Luas Wilayah</small>
+                        <small class="text-muted">Luas Wilayah</small>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6 text-center mb-3">
@@ -354,7 +354,7 @@
                 <img id="dashboardImagePreviewModalImg" src="" alt="Preview" class="img-fluid rounded shadow-lg">
             </div>
         </div>
-    </div>
+  </div>
 </div>
 
 <script>

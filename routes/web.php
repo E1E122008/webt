@@ -77,9 +77,15 @@ Route::prefix('admin')->group(function () {
 
          // Population Data
          Route::get('/population', [PopulationController::class, 'index'])->name('admin.population.index');
-         Route::post('/population', [PopulationController::class, 'update'])->name('admin.population.update');
+         Route::get('/population/{id}', [PopulationController::class, 'show'])->name('admin.population.show');
+         Route::get('/population/{id}/edit', [PopulationController::class, 'edit'])->name('admin.population.edit');
+         Route::post('/population', [PopulationController::class, 'store'])->name('admin.population.store');
+         Route::put('/population/{id}', [PopulationController::class, 'update'])->name('admin.population.update');
+         Route::delete('/population/{id}', [PopulationController::class, 'destroy'])->name('admin.population.destroy');
          Route::post('population/import', [PopulationController::class, 'importExcel'])->name('admin.population.import');
- 
+         Route::post('population/import-csv', [PopulationController::class, 'importCsv'])->name('admin.population.import-csv');
+         Route::post('population/import-excel', [PopulationController::class, 'importExcel'])->name('admin.population.import-excel');
+
 
         // Agricultural Data
         Route::get('/agricultural', [AdminController::class, 'agricultural'])->name('admin.agricultural');
