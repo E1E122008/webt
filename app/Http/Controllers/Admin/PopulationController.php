@@ -440,16 +440,47 @@ class PopulationController extends Controller
         try {
             $file = $request->file('file');
             $csvData = array_map('str_getcsv', file($file->getRealPath()));
-            
-            // Detect CSV format and find header row
+
+            // Normalize: skip leading empty columns until header (so "No" becomes first column)
+            $headerRowIndex = 0;
+            $leadingEmptyCols = 0;
+            for ($i = 0; $i < count($csvData); $i++) {
+                $row = $csvData[$i];
+                if (empty($row)) { continue; }
+                // Find first non-empty cell index
+                $firstNonEmpty = 0;
+                for ($j = 0; $j < count($row); $j++) {
+                    if (trim((string)($row[$j] ?? '')) !== '') { $firstNonEmpty = $j; break; }
+                }
+                $cellNo   = $row[$firstNonEmpty]   ?? null;
+                $cellNama = $row[$firstNonEmpty+1] ?? null;
+                if ($cellNo === 'No' && $cellNama === 'Nama') {
+                    $headerRowIndex = $i;
+                    $leadingEmptyCols = $firstNonEmpty; // how many empty cols to trim
+                    break;
+                }
+            }
+
+            if ($leadingEmptyCols > 0) {
+                // Trim the detected leading empty columns from all rows
+                foreach ($csvData as $idx => $row) {
+                    $csvData[$idx] = array_slice($row, $leadingEmptyCols);
+                }
+                Log::info('Normalized CSV by trimming leading empty columns', [
+                    'trimmed_cols' => $leadingEmptyCols,
+                    'header_row_index' => $headerRowIndex,
+                ]);
+            }
+
+            // Detect CSV format after normalization
             $csvFormat = $this->detectCsvFormat($csvData);
             Log::info('Detected CSV format: ' . $csvFormat);
             
             if ($csvFormat === 'unknown') {
                 return redirect()->back()->with('error', 'Format CSV tidak dikenali. Pastikan file CSV memiliki header yang benar dengan kolom "No" dan "Nama".');
             }
-            
-            // Find the header row index
+
+            // Recompute header row index on normalized data
             $headerRowIndex = 0;
             for ($i = 0; $i < count($csvData); $i++) {
                 $row = $csvData[$i];
@@ -458,7 +489,7 @@ class PopulationController extends Controller
                     break;
                 }
             }
-            
+
             // Skip rows up to and including the header row, then skip one more row (sub-header)
             for ($i = 0; $i <= $headerRowIndex + 1; $i++) {
                 array_shift($csvData);

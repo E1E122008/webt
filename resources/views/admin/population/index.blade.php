@@ -149,16 +149,16 @@
         <div class="card fade-in">
             <div class="card-body p-0">
     <div class="table-responsive">
-                    <table class="table table-hover table-striped mb-0" id="populationTable">
-                        <thead class="table-dark sticky-top">
-                            <tr>
-                                <th width="5%">No</th>
-                                <th width="20%">Data Pribadi</th>
-                                <th width="15%">Alamat & KK</th>
-                                <th width="15%">Status Sosial</th>
-                                <th width="15%">Data Pertanian</th>
-                                <th width="10%">Dusun</th>
-                                <th width="10%">Aksi</th>
+        <table class="table table-hover table-striped mb-0" id="populationTable">
+            <thead class="table-dark sticky-top">
+                <tr>
+                    <th width="5%">No</th>
+                    <th width="20%">Data Pribadi</th>
+                    <th width="15%">Alamat & KK</th>
+                    <th width="15%">Status Sosial</th>
+                    <th width="15%">Data Pertanian</th>
+                    <th width="10%">Dusun</th>
+                    <th width="10%">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -180,7 +180,27 @@
                     });
                 @endphp
                 @forelse($sorted as $item)
-                <tr data-dusun="{{ $item->dusun_id }}" data-gender="{{ $item->jenis_kelamin }}" data-search="{{ strtolower($item->nama . ' ' . $item->nik . ' ' . $item->no_kk) }}">
+                <tr data-dusun="{{ $item->dusun_id }}" data-gender="{{ $item->jenis_kelamin }}" data-search="{{ strtolower(
+                    ($item->nama ?? '') . ' ' .
+                    ($item->nik ?? '') . ' ' .
+                    ($item->no_kk ?? '') . ' ' .
+                    ($item->alamat_kk ?? '') . ' ' .
+                    ($item->hubungan_kepala_keluarga ?? '') . ' ' .
+                    ($item->status_perkawinan ?? '') . ' ' .
+                    ($item->suku ?? '') . ' ' .
+                    ($item->pendidikan_terakhir ?? '') . ' ' .
+                    ($item->mata_pencaharian ?? '') . ' ' .
+                    ($item->pekerjaan_tambahan ?? '') . ' ' .
+                    ($item->komoditas_utama ?? '') . ' ' .
+                    ($item->komoditas_buah_sayur ?? '') . ' ' .
+                    ($item->bantuan ?? '') . ' ' .
+                    ($item->status_kepemilikan_rumah ?? '') . ' ' .
+                    ($item->status_dinding ?? '') . ' ' .
+                    ($item->status_atap ?? '') . ' ' .
+                    ($item->penggunaan_listrik ?? '') . ' ' .
+                    ($item->mck ?? '') . ' ' .
+                    ($item->tempat_lahir ?? '') . ' Dusun ' . ($item->dusun_id ?? '')
+                ) }}">
                     <td>{{ $loop->iteration }}</td>
                     <td>
                         <div class="fw-bold">{{ $item->nama }}</div>
@@ -267,7 +287,27 @@
                 <div class="table-responsive">
                     <table class="table table-hover table-striped mb-0" id="dusun1Table">
                         <thead class="table-dark">
-                            <tr>
+                            <tr data-dusun="1" data-gender="{{ $item->jenis_kelamin }}" data-search="{{ strtolower(
+                                ($item->nama ?? '') . ' ' .
+                                ($item->nik ?? '') . ' ' .
+                                ($item->no_kk ?? '') . ' ' .
+                                ($item->alamat_kk ?? '') . ' ' .
+                                ($item->hubungan_kepala_keluarga ?? '') . ' ' .
+                                ($item->status_perkawinan ?? '') . ' ' .
+                                ($item->suku ?? '') . ' ' .
+                                ($item->pendidikan_terakhir ?? '') . ' ' .
+                                ($item->mata_pencaharian ?? '') . ' ' .
+                                ($item->pekerjaan_tambahan ?? '') . ' ' .
+                                ($item->komoditas_utama ?? '') . ' ' .
+                                ($item->komoditas_buah_sayur ?? '') . ' ' .
+                                ($item->bantuan ?? '') . ' ' .
+                                ($item->status_kepemilikan_rumah ?? '') . ' ' .
+                                ($item->status_dinding ?? '') . ' ' .
+                                ($item->status_atap ?? '') . ' ' .
+                                ($item->penggunaan_listrik ?? '') . ' ' .
+                                ($item->mck ?? '') . ' ' .
+                                ($item->tempat_lahir ?? '') . ' Dusun 1'
+                            ) }}">
                                 <th width="5%">No</th>
                                 <th width="20%">Data Pribadi</th>
                                 <th width="15%">Alamat & KK</th>
@@ -296,7 +336,27 @@
                                 });
                             @endphp
                             @forelse($dusun1Data as $item)
-                            <tr>
+                            <tr data-dusun="2" data-gender="{{ $item->jenis_kelamin }}" data-search="{{ strtolower(
+                                ($item->nama ?? '') . ' ' .
+                                ($item->nik ?? '') . ' ' .
+                                ($item->no_kk ?? '') . ' ' .
+                                ($item->alamat_kk ?? '') . ' ' .
+                                ($item->hubungan_kepala_keluarga ?? '') . ' ' .
+                                ($item->status_perkawinan ?? '') . ' ' .
+                                ($item->suku ?? '') . ' ' .
+                                ($item->pendidikan_terakhir ?? '') . ' ' .
+                                ($item->mata_pencaharian ?? '') . ' ' .
+                                ($item->pekerjaan_tambahan ?? '') . ' ' .
+                                ($item->komoditas_utama ?? '') . ' ' .
+                                ($item->komoditas_buah_sayur ?? '') . ' ' .
+                                ($item->bantuan ?? '') . ' ' .
+                                ($item->status_kepemilikan_rumah ?? '') . ' ' .
+                                ($item->status_dinding ?? '') . ' ' .
+                                ($item->status_atap ?? '') . ' ' .
+                                ($item->penggunaan_listrik ?? '') . ' ' .
+                                ($item->mck ?? '') . ' ' .
+                                ($item->tempat_lahir ?? '') . ' Dusun 2'
+                            ) }}">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>
                                     <div class="fw-bold">{{ $item->nama }}</div>
@@ -352,7 +412,27 @@
                                 </td>
                             </tr>
                             @empty
-                            <tr>
+                            <tr data-dusun="3" data-gender="{{ $item->jenis_kelamin }}" data-search="{{ strtolower(
+                                ($item->nama ?? '') . ' ' .
+                                ($item->nik ?? '') . ' ' .
+                                ($item->no_kk ?? '') . ' ' .
+                                ($item->alamat_kk ?? '') . ' ' .
+                                ($item->hubungan_kepala_keluarga ?? '') . ' ' .
+                                ($item->status_perkawinan ?? '') . ' ' .
+                                ($item->suku ?? '') . ' ' .
+                                ($item->pendidikan_terakhir ?? '') . ' ' .
+                                ($item->mata_pencaharian ?? '') . ' ' .
+                                ($item->pekerjaan_tambahan ?? '') . ' ' .
+                                ($item->komoditas_utama ?? '') . ' ' .
+                                ($item->komoditas_buah_sayur ?? '') . ' ' .
+                                ($item->bantuan ?? '') . ' ' .
+                                ($item->status_kepemilikan_rumah ?? '') . ' ' .
+                                ($item->status_dinding ?? '') . ' ' .
+                                ($item->status_atap ?? '') . ' ' .
+                                ($item->penggunaan_listrik ?? '') . ' ' .
+                                ($item->mck ?? '') . ' ' .
+                                ($item->tempat_lahir ?? '') . ' Dusun 3'
+                            ) }}">
                                 <td colspan="8" class="text-center py-4">
                                     <i class="fas fa-map-marker-alt fa-3x text-muted mb-3"></i>
                                     <p class="text-muted">Belum ada data penduduk di Dusun 1</p>
